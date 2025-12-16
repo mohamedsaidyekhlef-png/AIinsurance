@@ -1,13 +1,27 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { ArrowRight, Search, Zap, Shield, CheckCircle2, FileText, BarChart3, TrendingUp } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowRight, Search, Zap, Shield, CheckCircle2, FileText, BarChart3, TrendingUp, HelpCircle, BookOpen } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { niches, blogPosts, features, partners } from '../data/mockData';
 import { Link, useNavigate } from 'react-router-dom';
 
 export const Home = () => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [headingIndex, setHeadingIndex] = useState(0);
   const navigate = useNavigate();
+
+  const headings = [
+    <span key="1">Find the <span className="text-blue-600">Best Online Insurance</span> & <span className="text-teal-600">Rates</span></span>,
+    <span key="2">Compare <span className="text-blue-600">AI-Powered Rates</span> & Save up to 30%</span>,
+    <span key="3">The Future of Insurance is <span className="text-teal-600">Smart, Fast, & Fair</span></span>
+  ];
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setHeadingIndex((prev) => (prev + 1) % headings.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, [headings.length]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,20 +38,34 @@ export const Home = () => {
         <div className="absolute bottom-0 left-0 translate-y-1/4 -translate-x-1/4 w-[600px] h-[600px] bg-teal-100/50 rounded-full blur-3xl opacity-50 pointer-events-none" />
         
         <div className="container mx-auto px-4 md:px-6 relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
+          <div className="max-w-5xl mx-auto text-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <span className="inline-block py-1 px-3 rounded-full bg-teal-100 text-teal-700 text-sm font-semibold mb-6 border border-teal-200">
+              <span className="inline-block py-1 px-3 rounded-full bg-teal-100 text-teal-700 text-sm font-semibold mb-8 border border-teal-200">
                 Global Insurance Marketplace
               </span>
-              <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-slate-900 mb-6 leading-tight">
-                Compare & Save on <span className="text-blue-600">AI-Powered</span> Insurance
-              </h1>
+              
+              {/* Animated Headings */}
+              <div className="h-[140px] md:h-[180px] relative flex items-center justify-center mb-6">
+                <AnimatePresence mode="wait">
+                  <motion.h1
+                    key={headingIndex}
+                    initial={{ y: 20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={{ y: -20, opacity: 0 }}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
+                    className="text-5xl md:text-7xl font-bold tracking-tight text-slate-900 leading-tight absolute w-full px-4"
+                  >
+                    {headings[headingIndex]}
+                  </motion.h1>
+                </AnimatePresence>
+              </div>
+
               <p className="text-xl text-slate-600 mb-10 max-w-2xl mx-auto leading-relaxed">
-                We analyze hundreds of providers to find you the best coverage. Use our free tools to decode policies and predict your premiums.
+                We analyze hundreds of insurance providers to find you the best coverage. Whether you need to understand your insurance policy or find e insurance solutions, we have the tools.
               </p>
 
               {/* AI Search Bar */}
@@ -78,42 +106,101 @@ export const Home = () => {
         <div className="container mx-auto px-4 md:px-6">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Free Insurance Tools</h2>
-            <p className="text-slate-600 text-lg">Smart utilities to help you make better financial decisions.</p>
+            <p className="text-slate-600 text-lg">Smart utilities to help you understand insurance coverage and make better financial decisions.</p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <Link to="/tools" className="group">
+            <Link to="/tools/policy-analyzer" className="group">
               <div className="p-8 rounded-2xl bg-slate-50 border border-slate-100 hover:shadow-xl transition-all duration-300 h-full">
                 <div className="w-14 h-14 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                   <FileText size={28} />
                 </div>
                 <h3 className="text-xl font-bold text-slate-900 mb-3">Policy Analyzer</h3>
-                <p className="text-slate-600 mb-4">Upload your confusing policy text and let our AI explain the fine print in plain English.</p>
+                <p className="text-slate-600 mb-4">Upload your confusing insurance policy text and let our AI explain the fine print in plain English.</p>
                 <span className="text-blue-600 font-semibold flex items-center gap-1">Try it now <ArrowRight size={16} /></span>
               </div>
             </Link>
 
-            <Link to="/tools" className="group">
+            <Link to="/tools/premium-predictor" className="group">
               <div className="p-8 rounded-2xl bg-slate-50 border border-slate-100 hover:shadow-xl transition-all duration-300 h-full">
                 <div className="w-14 h-14 bg-teal-100 text-teal-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                   <BarChart3 size={28} />
                 </div>
                 <h3 className="text-xl font-bold text-slate-900 mb-3">Premium Predictor</h3>
-                <p className="text-slate-600 mb-4">Use predictive models to estimate your future rate changes based on market trends.</p>
+                <p className="text-slate-600 mb-4">Understand the insurance premium definition in practice. Use predictive models to estimate your future rate changes.</p>
                 <span className="text-teal-600 font-semibold flex items-center gap-1">Calculate <ArrowRight size={16} /></span>
               </div>
             </Link>
 
-            <Link to="/tools" className="group">
+            <Link to="/tools/gap-finder" className="group">
               <div className="p-8 rounded-2xl bg-slate-50 border border-slate-100 hover:shadow-xl transition-all duration-300 h-full">
                 <div className="w-14 h-14 bg-rose-100 text-rose-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                   <Shield size={28} />
                 </div>
                 <h3 className="text-xl font-bold text-slate-900 mb-3">Coverage Gap Finder</h3>
-                <p className="text-slate-600 mb-4">Take a 30-second quiz to find critical holes in your current protection plan.</p>
+                <p className="text-slate-600 mb-4">Are you fully insured? Take a 30-second quiz to find critical holes in your protection plan.</p>
                 <span className="text-rose-600 font-semibold flex items-center gap-1">Start Quiz <ArrowRight size={16} /></span>
               </div>
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Knowledge Hub (SEO Glossary) */}
+      <section className="py-20 bg-slate-50 border-t border-slate-200">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="flex flex-col md:flex-row items-center justify-between mb-12">
+            <div className="mb-6 md:mb-0">
+              <div className="flex items-center gap-2 text-blue-600 font-bold mb-2">
+                <BookOpen size={20} /> <span>Insurance Knowledge Hub</span>
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-900">Common Insurance Terms</h2>
+              <p className="text-slate-600 mt-2">Master the vocabulary to get the best deal.</p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
+              <h3 className="font-bold text-slate-900 mb-2 flex items-center gap-2"><HelpCircle size={16} className="text-teal-500" /> Premium Definition</h3>
+              <p className="text-sm text-slate-600">
+                An <strong>insurance premium definition</strong> refers to the amount of money an individual or business pays for an insurance policy. It is the cost of your <strong>insurance coverage</strong>.
+              </p>
+            </div>
+
+            <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
+              <h3 className="font-bold text-slate-900 mb-2 flex items-center gap-2"><HelpCircle size={16} className="text-teal-500" /> Risk Definition</h3>
+              <p className="text-sm text-slate-600">
+                In insurance, <strong>risk definition</strong> is the chance of something harmful or unexpected happening. Insurers calculate premiums based on this probability.
+              </p>
+            </div>
+
+            <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
+              <h3 className="font-bold text-slate-900 mb-2 flex items-center gap-2"><HelpCircle size={16} className="text-teal-500" /> Assurance Definition</h3>
+              <p className="text-sm text-slate-600">
+                The <strong>assurance definition</strong> is often used interchangeably with insurance, but typically refers to coverage for events that are certain to happen (like death in life assurance), providing you are <strong>assured</strong>.
+              </p>
+            </div>
+
+            <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
+              <h3 className="font-bold text-slate-900 mb-2 flex items-center gap-2"><HelpCircle size={16} className="text-teal-500" /> Loss Definition</h3>
+              <p className="text-sm text-slate-600">
+                A <strong>loss definition</strong> in insurance is the injury or damage sustained by the <strong>insured</strong> in consequence of the happening of one or more of the accidents or misfortunes against which the insurer has undertaken to indemnify the insured.
+              </p>
+            </div>
+
+            <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
+              <h3 className="font-bold text-slate-900 mb-2 flex items-center gap-2"><HelpCircle size={16} className="text-teal-500" /> Incurred Meaning</h3>
+              <p className="text-sm text-slate-600">
+                The <strong>incurred meaning</strong> relates to expenses or losses that have happened and for which the insurance company is liable, even if they haven't paid the claim yet.
+              </p>
+            </div>
+
+            <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
+              <h3 className="font-bold text-slate-900 mb-2 flex items-center gap-2"><HelpCircle size={16} className="text-teal-500" /> Renters Insurance Definition</h3>
+              <p className="text-sm text-slate-600">
+                A <strong>renters insurance definition</strong> is a policy that provides coverage for a policyholder's belongings, liabilities, and possibly living expenses in case of a loss event in a rented property.
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -129,10 +216,10 @@ export const Home = () => {
               </p>
               <ul className="space-y-4 mb-8">
                 <li className="flex items-center gap-3">
-                  <CheckCircle2 className="text-teal-400" /> <span>Compare 20+ Top Providers</span>
+                  <CheckCircle2 className="text-teal-400" /> <span>Compare 20+ Top <strong>Insurance Providers</strong></span>
                 </li>
                 <li className="flex items-center gap-3">
-                  <CheckCircle2 className="text-teal-400" /> <span>Exclusive Online Discounts</span>
+                  <CheckCircle2 className="text-teal-400" /> <span>Exclusive <strong>Online Insurance</strong> Discounts</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <CheckCircle2 className="text-teal-400" /> <span>Instant Approval Partners</span>

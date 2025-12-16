@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { CheckCircle2, Globe, Users, Zap } from 'lucide-react';
+import { CheckCircle2, Globe, Users, Zap, Briefcase, HeartHandshake } from 'lucide-react';
+import { Button } from '../components/ui/Button';
 
 export const About = () => {
   return (
@@ -17,7 +18,7 @@ export const About = () => {
             Democratizing Insurance with <span className="text-blue-600">Intelligence</span>
           </motion.h1>
           <p className="text-xl text-slate-600 leading-relaxed">
-            INSURALIX is the world's first AI-native insurance resource hub. We bridge the gap between complex policy jargon and consumer understanding using advanced technology.
+            INSURALIX is the world's first AI-native insurance resource hub. We provide <strong>reassurance</strong> (a common <strong>assurance synonym</strong>) to millions by bridging the gap between complex policy jargon and consumer understanding.
           </p>
         </div>
 
@@ -53,14 +54,14 @@ export const About = () => {
         </div>
 
         {/* Story Section */}
-        <div className="bg-slate-900 text-white rounded-[3rem] p-10 md:p-20 overflow-hidden relative">
+        <div className="bg-slate-900 text-white rounded-[3rem] p-10 md:p-20 overflow-hidden relative mb-20">
            <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-600/20 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2" />
            
            <div className="relative z-10 max-w-3xl">
              <h2 className="text-3xl md:text-4xl font-bold mb-8">Why We Started</h2>
              <div className="space-y-6 text-lg text-slate-300 leading-relaxed">
                <p>
-                 The insurance industry hasn't changed much in 100 years. It's filled with paperwork, confusing terms, and slow processes. But the world has changed.
+                 The insurance industry hasn't changed much in 100 years. It's filled with paperwork, confusing terms like "<strong>reassurance definition</strong>" vs "insurance", and slow processes. But the world has changed.
                </p>
                <p>
                  We saw an opportunity to use <strong>Generative AI</strong> and <strong>Predictive Analytics</strong> to flip the script. Instead of you chasing insurers, we built tools that make insurers compete for you based on your actual data.
@@ -85,6 +86,20 @@ export const About = () => {
                </div>
              </div>
            </div>
+        </div>
+
+        {/* Careers / Jobs Section */}
+        <div className="max-w-4xl mx-auto text-center">
+           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-bold uppercase tracking-wider mb-6">
+              <Briefcase size={14} /> Careers
+           </div>
+           <h2 className="text-3xl font-bold text-slate-900 mb-6">Looking for <span className="text-blue-600">Insurance Jobs</span>?</h2>
+           <p className="text-lg text-slate-600 mb-8 max-w-2xl mx-auto">
+              We are always looking for talented actuaries, data scientists, and content experts. Join our mission to redefine the <strong>insurance association</strong> with technology.
+           </p>
+           <Button variant="outline" className="border-slate-300 hover:border-blue-600 hover:text-blue-600">
+              View Open Positions
+           </Button>
         </div>
 
       </div>

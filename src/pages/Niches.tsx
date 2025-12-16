@@ -1,7 +1,7 @@
 import React from 'react';
 import { niches } from '../data/mockData';
 import { motion } from 'framer-motion';
-import { ArrowRight, TrendingUp } from 'lucide-react';
+import { ArrowRight, TrendingUp, Layers } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '../components/ui/Button';
 
@@ -10,9 +10,12 @@ export const Niches = () => {
     <div className="pt-32 pb-20 min-h-screen bg-white">
       <div className="container mx-auto px-4 md:px-6">
         <div className="max-w-3xl mx-auto text-center mb-20">
-          <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">Explore Insurance Categories</h1>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold uppercase tracking-wider mb-6">
+             <Layers size={14} /> All Insurance Categories
+          </div>
+          <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">Explore <span className="text-blue-600">All Insurance</span> Niches</h1>
           <p className="text-xl text-slate-600">
-            Find the best providers for your specific needs. We've categorized top-rated insurers to help you compare effectively.
+            Find the best providers for your specific needs. From understanding <strong>life insurance types</strong> to finding the best auto rates, we've categorized top-rated insurers to help you compare effectively.
           </p>
         </div>
 
@@ -38,6 +41,8 @@ export const Niches = () => {
               <h3 className="text-2xl font-bold text-slate-900 mb-3">{niche.title}</h3>
               <p className="text-slate-600 text-lg leading-relaxed mb-6 flex-grow">
                 {niche.description}
+                {niche.id === 'home' && <span className="block mt-2 text-sm text-slate-500">Includes <strong>renters insurance definition</strong> and coverage details.</span>}
+                {niche.id === 'health' && <span className="block mt-2 text-sm text-slate-500">Compare various <strong>life insurance types</strong> including Term and Whole Life.</span>}
               </p>
               
               <div className="flex flex-wrap gap-2 mb-6">

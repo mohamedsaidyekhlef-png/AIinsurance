@@ -1,7 +1,7 @@
 import React from 'react';
 import { comparisonData, partners } from '../data/mockData';
 import { motion } from 'framer-motion';
-import { Check, Star, ExternalLink, TrendingUp } from 'lucide-react';
+import { Check, Star, ExternalLink, TrendingUp, Globe, ShieldCheck } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 
 export const Compare = () => {
@@ -9,9 +9,9 @@ export const Compare = () => {
     <div className="pt-32 pb-20 min-h-screen bg-slate-50">
       <div className="container mx-auto px-4 md:px-6">
         <div className="max-w-3xl mx-auto text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">Compare & Save</h1>
+          <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">Compare & Save on <span className="text-blue-600">Best Insurance</span></h1>
           <p className="text-xl text-slate-600">
-            We've curated the best AI-powered insurance providers. Compare features, read reviews, and check for exclusive online rates.
+            We've curated the best AI-powered <strong>insurance providers</strong>. Compare features, read reviews, and check for exclusive <strong>online insurance</strong> rates.
           </p>
         </div>
 
@@ -19,7 +19,7 @@ export const Compare = () => {
         <div className="mb-20">
           <div className="flex items-center gap-2 mb-8 justify-center">
             <TrendingUp className="text-teal-500" />
-            <h2 className="text-3xl font-bold text-slate-900">Featured Offers</h2>
+            <h2 className="text-3xl font-bold text-slate-900">Featured <strong>E Insurance</strong> Offers</h2>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -71,10 +71,32 @@ export const Compare = () => {
           </div>
         </div>
 
+        {/* Regional Pricing Teaser */}
+        <div className="bg-gradient-to-r from-slate-900 to-slate-800 rounded-3xl p-8 md:p-12 mb-20 text-white relative overflow-hidden">
+           <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+           <div className="relative z-10 flex flex-col md:flex-row items-center gap-8">
+              <div className="p-4 bg-white/10 rounded-2xl">
+                 <Globe size={40} className="text-teal-400" />
+              </div>
+              <div>
+                 <h3 className="text-2xl font-bold mb-2">Location-Based Savings</h3>
+                 <p className="text-slate-300 leading-relaxed max-w-2xl">
+                    Rates vary significantly by region. Whether you are looking for <strong>insurance quotes Texas</strong>, California, or New York, our AI adjusts to local regulations and risk factors to find you the most competitive <strong>insurance coverage</strong>.
+                 </p>
+              </div>
+              <div className="md:ml-auto">
+                 <Button variant="outline" className="border-teal-400 text-teal-400 hover:bg-teal-400 hover:text-slate-900">
+                    Check Local Rates
+                 </Button>
+              </div>
+           </div>
+        </div>
+
         {/* Comparison Table */}
         <div className="bg-white rounded-3xl shadow-xl border border-slate-200 overflow-hidden">
           <div className="p-8 border-b border-slate-100 text-center">
              <h2 className="text-2xl font-bold text-slate-900">Why Switch to AI Insurance?</h2>
+             <p className="text-slate-500 mt-2">Comparing traditional vs. modern <strong>insurance providers</strong>.</p>
           </div>
           <div className="grid grid-cols-3 bg-slate-50 text-slate-700 p-4 md:p-6 text-sm md:text-base font-bold border-b border-slate-200">
             <div>Feature</div>

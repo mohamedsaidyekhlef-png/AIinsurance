@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Search, MapPin, Building2, ExternalLink, Globe, Star, Phone, Navigation, Filter } from 'lucide-react';
+import { Search, MapPin, Building2, ExternalLink, Globe, Star, Phone, Navigation, Filter, FileBadge } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { motion, AnimatePresence } from 'framer-motion';
 import { partners, niches, officialDirectories } from '../data/mockData';
@@ -78,9 +78,9 @@ export const SearchProvider = () => {
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-bold uppercase tracking-wider mb-6">
                 <Globe size={14} /> Global Database
               </div>
-              <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">Find Providers Worldwide</h1>
+              <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">Find <strong>Insurance Providers</strong> Worldwide</h1>
               <p className="text-xl text-slate-600 mb-10 max-w-2xl mx-auto">
-                Access the largest database of AI-verified insurers, local agents, and regulatory bodies across USA, Canada, Europe, and Australia.
+                Access the largest database of AI-verified insurers, local agents, and regulatory bodies (including your local <strong>insurance commissioner</strong>) across USA, Canada, Europe, and Australia.
               </p>
 
               <form onSubmit={handleSearch} className="relative max-w-2xl mx-auto mb-12 bg-white p-2 rounded-3xl shadow-xl border border-slate-100 flex flex-col md:flex-row gap-2">
@@ -250,10 +250,10 @@ export const SearchProvider = () => {
          <div className="max-w-6xl mx-auto">
             <div className="flex items-center gap-3 mb-8">
               <div className="p-2 bg-blue-100 rounded-lg text-blue-600">
-                <Globe size={24} />
+                <FileBadge size={24} />
               </div>
               <h2 className="text-2xl font-bold text-slate-900">
-                Official Regulatory Directories & Libraries
+                Official Regulatory Directories & <strong>Insurance Commissioner</strong> Sites
               </h2>
             </div>
             
