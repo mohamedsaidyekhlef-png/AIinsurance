@@ -9,6 +9,19 @@ import { Tools } from './pages/Tools';
 import { Compare } from './pages/Compare';
 import { Claims } from './pages/Claims';
 import { SearchProvider } from './pages/SearchProvider';
+import { About } from './pages/About';
+import { PrivacyPolicy } from './pages/PrivacyPolicy';
+import { TermsOfService } from './pages/TermsOfService';
+import { Disclaimer } from './pages/Disclaimer';
+
+// Tool Pages
+import { PolicyAnalyzerPage } from './pages/tools/PolicyAnalyzerPage';
+import { PremiumPredictorPage } from './pages/tools/PremiumPredictorPage';
+import { GapFinderPage } from './pages/tools/GapFinderPage';
+import { LifeEventSimulatorPage } from './pages/tools/LifeEventSimulatorPage';
+import { EvidenceVaultPage } from './pages/tools/EvidenceVaultPage';
+import { TelematicsOptimizerPage } from './pages/tools/TelematicsOptimizerPage';
+import { DisasterAlertPage } from './pages/tools/DisasterAlertPage';
 
 // Scroll to top on route change
 const ScrollToTop = () => {
@@ -30,11 +43,24 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/niches" element={<Niches />} />
+            
+            {/* Tools Routes */}
             <Route path="/tools" element={<Tools />} />
+            <Route path="/tools/policy-analyzer" element={<PolicyAnalyzerPage />} />
+            <Route path="/tools/premium-predictor" element={<PremiumPredictorPage />} />
+            <Route path="/tools/gap-finder" element={<GapFinderPage />} />
+            <Route path="/tools/life-event-simulator" element={<LifeEventSimulatorPage />} />
+            <Route path="/tools/evidence-vault" element={<EvidenceVaultPage />} />
+            <Route path="/tools/telematics-optimizer" element={<TelematicsOptimizerPage />} />
+            <Route path="/tools/disaster-alert" element={<DisasterAlertPage />} />
+
             <Route path="/compare" element={<Compare />} />
             <Route path="/claims" element={<Claims />} />
             <Route path="/search" element={<SearchProvider />} />
-            <Route path="/about" element={<div className="pt-32 text-center min-h-[60vh]"><h1 className="text-4xl font-bold">About Page Coming Soon</h1></div>} />
+            <Route path="/about" element={<About />} />
+            <Route path="/privacy" element={<PrivacyPolicy />} />
+            <Route path="/terms" element={<TermsOfService />} />
+            <Route path="/disclaimer" element={<Disclaimer />} />
           </Routes>
         </main>
         <Footer />

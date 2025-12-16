@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, TrendingUp } from 'lucide-react';
+import { Menu, X, TrendingUp, ChevronDown, FileText, BarChart3, Shield, Activity, Camera, Smartphone, CloudLightning } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '../../lib/utils';
 
 export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [toolsDropdownOpen, setToolsDropdownOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
 
@@ -20,11 +21,22 @@ export const Header = () => {
 
   useEffect(() => {
     setIsOpen(false);
+    setToolsDropdownOpen(false);
   }, [location]);
+
+  const toolsMenu = [
+    { name: 'Policy Analyzer', path: '/tools/policy-analyzer', icon: FileText, color: 'text-blue-600', desc: 'Decode fine print' },
+    { name: 'Premium Predictor', path: '/tools/premium-predictor', icon: BarChart3, color: 'text-teal-600', desc: 'Forecast rates' },
+    { name: 'Gap Finder', path: '/tools/gap-finder', icon: Shield, color: 'text-rose-600', desc: 'Find missing coverage' },
+    { name: 'Life Simulator', path: '/tools/life-event-simulator', icon: Activity, color: 'text-purple-600', desc: 'Future risk check' },
+    { name: 'Evidence Vault', path: '/tools/evidence-vault', icon: Camera, color: 'text-indigo-600', desc: 'Blockchain proof' },
+    { name: 'Telematics Opt.', path: '/tools/telematics-optimizer', icon: Smartphone, color: 'text-emerald-600', desc: 'Data sandbox' },
+    { name: 'Disaster Alert', path: '/tools/disaster-alert', icon: CloudLightning, color: 'text-amber-600', desc: 'Parametric payouts' },
+  ];
 
   const navLinks = [
     { name: 'Home', path: '/' },
-    { name: 'Tools', path: '/tools' },
+    // Tools is handled separately
     { name: 'Compare', path: '/compare' },
     { name: 'Claims Help', path: '/claims' },
     { name: 'Directory', path: '/search' },
@@ -35,12 +47,12 @@ export const Header = () => {
     <header 
       className={cn(
         "fixed top-0 w-full z-50 transition-all duration-300 border-b",
-        scrolled ? "bg-white/90 backdrop-blur-md border-slate-200 py-1 shadow-sm" : "bg-transparent border-transparent py-2"
+        scrolled ? "bg-white/90 backdrop-blur-md border-slate-200 py-2 shadow-sm" : "bg-transparent border-transparent py-4"
       )}
     >
       <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
-        {/* Logo Section - Gap reduced to 0 to bring text closer */}
-        <Link to="/" className="flex items-center gap-0 group shrink-0">
+        {/* Logo Section */}
+        <Link to="/" className="flex items-center gap-0 group shrink-0 z-50">
           <div className="relative">
             <div className="absolute inset-0 bg-blue-500 blur-3xl opacity-20 group-hover:opacity-30 transition-opacity rounded-full scale-100" />
             <img 
@@ -49,15 +61,67 @@ export const Header = () => {
               className="h-28 w-28 md:h-36 md:w-36 object-contain relative z-10 transition-transform duration-300 group-hover:scale-105 drop-shadow-md"
             />
           </div>
-          {/* Negative margin applied to pull text even closer if image has whitespace */}
           <span className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-teal-500 tracking-tight hidden sm:block -ml-2">
             INSURALIX
           </span>
         </Link>
 
-        {/* Desktop Nav - Changed to hidden lg:flex to ensure one line on desktop */}
-        <nav className="hidden lg:flex items-center gap-4 xl:gap-8 whitespace-nowrap">
-          {navLinks.map((link) => (
+        {/* Desktop Nav */}
+        <nav className="hidden lg:flex items-center gap-6 xl:gap-8 whitespace-nowrap">
+          <Link to="/" className={cn("text-sm font-medium transition-colors hover:text-blue-600", location.pathname === '/' ? "text-blue-600" : "text-slate-600")}>
+            Home
+          </Link>
+
+          {/* Tools Dropdown */}
+          <div 
+            className="relative group"
+            onMouseEnter={() => setToolsDropdownOpen(true)}
+            onMouseLeave={() => setToolsDropdownOpen(false)}
+          >
+            <Link 
+              to="/tools" 
+              className={cn(
+                "text-sm font-medium transition-colors hover:text-blue-600 flex items-center gap-1 py-4", 
+                location.pathname.includes('/tools') ? "text-blue-600" : "text-slate-600"
+              )}
+            >
+              Tools <ChevronDown size={14} className={cn("transition-transform", toolsDropdownOpen ? "rotate-180" : "")} />
+            </Link>
+            
+            <AnimatePresence>
+              {toolsDropdownOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 10 }}
+                  transition={{ duration: 0.2 }}
+                  className="absolute top-full left-1/2 -translate-x-1/2 w-[600px] bg-white rounded-2xl shadow-xl border border-slate-100 p-6 grid grid-cols-2 gap-4 z-50"
+                >
+                  <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-white rotate-45 border-t border-l border-slate-100" />
+                  {toolsMenu.map((tool) => (
+                    <Link 
+                      key={tool.name} 
+                      to={tool.path}
+                      className="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 transition-colors group/item"
+                    >
+                      <div className={cn("p-2 rounded-lg bg-slate-50 group-hover/item:bg-white group-hover/item:shadow-sm transition-all", tool.color)}>
+                        <tool.icon size={20} />
+                      </div>
+                      <div>
+                        <div className="font-bold text-slate-900 text-sm">{tool.name}</div>
+                        <div className="text-xs text-slate-500">{tool.desc}</div>
+                      </div>
+                    </Link>
+                  ))}
+                  <Link to="/tools" className="col-span-2 mt-2 p-3 text-center text-sm font-bold text-blue-600 hover:bg-blue-50 rounded-xl transition-colors">
+                    View All Tools &rarr;
+                  </Link>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          {navLinks.slice(1).map((link) => (
             <Link 
               key={link.name} 
               to={link.path}
@@ -67,12 +131,6 @@ export const Header = () => {
               )}
             >
               {link.name}
-              {location.pathname === link.path && (
-                <motion.div 
-                  layoutId="underline"
-                  className="absolute -bottom-1 left-0 right-0 h-0.5 bg-blue-600 rounded-full"
-                />
-              )}
             </Link>
           ))}
           <Link to="/compare">
@@ -82,9 +140,9 @@ export const Header = () => {
           </Link>
         </nav>
 
-        {/* Mobile Toggle - Visible on md and below */}
+        {/* Mobile Toggle */}
         <button 
-          className="lg:hidden text-slate-700 p-2"
+          className="lg:hidden text-slate-700 p-2 z-50"
           onClick={() => setIsOpen(!isOpen)}
         >
           {isOpen ? <X size={28} /> : <Menu size={28} />}
@@ -96,23 +154,43 @@ export const Header = () => {
         {isOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
+            animate={{ opacity: 1, height: '100vh' }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-white border-b border-slate-200 overflow-hidden shadow-xl"
+            className="lg:hidden fixed inset-0 bg-white z-40 pt-24 overflow-y-auto"
           >
-            <div className="container mx-auto px-4 py-6 flex flex-col gap-4">
-              {navLinks.map((link) => (
+            <div className="container mx-auto px-4 pb-10 flex flex-col gap-2">
+              <Link to="/" onClick={() => setIsOpen(false)} className="text-xl font-bold text-slate-900 py-3 border-b border-slate-50">Home</Link>
+              
+              <div className="py-3 border-b border-slate-50">
+                <div className="text-xl font-bold text-slate-900 mb-4">Tools</div>
+                <div className="grid grid-cols-1 gap-3 pl-4">
+                  {toolsMenu.map((tool) => (
+                    <Link 
+                      key={tool.name} 
+                      to={tool.path}
+                      onClick={() => setIsOpen(false)}
+                      className="flex items-center gap-3 text-slate-600"
+                    >
+                      <tool.icon size={18} className={tool.color} />
+                      <span className="font-medium">{tool.name}</span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              {navLinks.slice(1).map((link) => (
                 <Link 
                   key={link.name} 
                   to={link.path}
-                  className="text-lg font-medium text-slate-700 hover:text-blue-600 py-2 border-b border-slate-50"
                   onClick={() => setIsOpen(false)}
+                  className="text-xl font-bold text-slate-900 py-3 border-b border-slate-50"
                 >
                   {link.name}
                 </Link>
               ))}
-              <Link to="/compare" className="mt-2" onClick={() => setIsOpen(false)}>
-                <Button className="w-full bg-teal-500 hover:bg-teal-600">View Top Offers</Button>
+              
+              <Link to="/compare" className="mt-6" onClick={() => setIsOpen(false)}>
+                <Button className="w-full bg-teal-500 hover:bg-teal-600 py-6 text-lg">View Top Offers</Button>
               </Link>
             </div>
           </motion.div>

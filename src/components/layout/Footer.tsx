@@ -35,9 +35,9 @@ export const Footer = () => {
             <h4 className="text-white font-semibold mb-4">Company</h4>
             <ul className="space-y-2 text-sm">
               <li><Link to="/about" className="hover:text-blue-400 transition-colors">About Us</Link></li>
-              <li><Link to="#" className="hover:text-blue-400 transition-colors">Careers</Link></li>
-              <li><Link to="#" className="hover:text-blue-400 transition-colors">Privacy Policy</Link></li>
-              <li><Link to="#" className="hover:text-blue-400 transition-colors">Terms of Service</Link></li>
+              <li><Link to="/privacy" className="hover:text-blue-400 transition-colors">Privacy Policy</Link></li>
+              <li><Link to="/terms" className="hover:text-blue-400 transition-colors">Terms of Service</Link></li>
+              <li><Link to="/disclaimer" className="hover:text-blue-400 transition-colors">Disclaimer</Link></li>
             </ul>
           </div>
 
