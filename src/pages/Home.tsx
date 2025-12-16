@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Search, Zap, Shield, CheckCircle2, FileText, BarChart3 } from 'lucide-react';
+import { ArrowRight, Search, Zap, Shield, CheckCircle2, FileText, BarChart3, TrendingUp } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { niches, blogPosts, features, partners } from '../data/mockData';
 import { Link, useNavigate } from 'react-router-dom';
@@ -12,7 +12,7 @@ export const Home = () => {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      navigate('/tools');
+      navigate('/search');
     }
   };
 
@@ -30,14 +30,14 @@ export const Home = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <span className="inline-block py-1 px-3 rounded-full bg-blue-100 text-blue-700 text-sm font-semibold mb-6 border border-blue-200">
-                The Intelligent Insurance Portal
+              <span className="inline-block py-1 px-3 rounded-full bg-teal-100 text-teal-700 text-sm font-semibold mb-6 border border-teal-200">
+                Global Insurance Marketplace
               </span>
               <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-slate-900 mb-6 leading-tight">
-                Find the Best <span className="text-blue-600">AI-Backed</span> Policy
+                Compare & Save on <span className="text-blue-600">AI-Powered</span> Insurance
               </h1>
               <p className="text-xl text-slate-600 mb-10 max-w-2xl mx-auto leading-relaxed">
-                Compare rates, analyze policies, and discover how AI is lowering premiums for forward-thinking people like you.
+                We analyze hundreds of providers to find you the best coverage. Use our free tools to decode policies and predict your premiums.
               </p>
 
               {/* AI Search Bar */}
@@ -46,22 +46,22 @@ export const Home = () => {
                   <Search className="absolute left-4 text-slate-400" size={20} />
                   <input 
                     type="text" 
-                    placeholder="Try 'Best AI Auto Insurance' or 'Analyze my policy'" 
+                    placeholder="Search providers in your city (e.g. 'London', 'New York')" 
                     className="w-full pl-12 pr-4 py-4 rounded-full border border-slate-200 shadow-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-lg"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                   />
                   <Button type="submit" className="absolute right-2 top-2 bottom-2 rounded-full px-6">
-                    Search
+                    Find
                   </Button>
                 </div>
               </form>
 
               {/* Trust Bar */}
               <div className="flex flex-col items-center gap-4">
-                <p className="text-sm text-slate-500 font-medium uppercase tracking-widest">Trusted AI Partners</p>
+                <p className="text-sm text-slate-500 font-medium uppercase tracking-widest">Compare Top Providers</p>
                 <div className="flex flex-wrap justify-center gap-8 md:gap-12 opacity-70 grayscale hover:grayscale-0 transition-all duration-500">
-                  {partners.map((p, i) => (
+                  {partners.slice(0, 5).map((p, i) => (
                     <div key={i} className="flex items-center gap-2 text-xl font-bold text-slate-700">
                       <span className="text-2xl">{p.logo}</span> {p.name}
                     </div>
@@ -77,8 +77,8 @@ export const Home = () => {
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4 md:px-6">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Free AI Insurance Tools</h2>
-            <p className="text-slate-600 text-lg">Don't guess. Use data to find the perfect coverage.</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Free Insurance Tools</h2>
+            <p className="text-slate-600 text-lg">Smart utilities to help you make better financial decisions.</p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -123,50 +123,55 @@ export const Home = () => {
         <div className="container mx-auto px-4 md:px-6 relative z-10">
           <div className="flex flex-col md:flex-row items-center justify-between gap-12">
             <div className="md:w-1/2">
-              <h2 className="text-3xl md:text-5xl font-bold mb-6">Traditional vs. AI Insurance</h2>
+              <h2 className="text-3xl md:text-5xl font-bold mb-6">Stop Overpaying for Legacy Insurance</h2>
               <p className="text-slate-400 text-lg mb-8 leading-relaxed">
-                Why wait weeks for a claim when algorithms can do it in seconds? See the data-backed difference between legacy carriers and modern InsurTech.
+                Modern AI-first carriers offer the same coverage for up to 30% less. We've partnered with the best tech-forward insurers to bring you exclusive rates.
               </p>
               <ul className="space-y-4 mb-8">
                 <li className="flex items-center gap-3">
-                  <CheckCircle2 className="text-teal-400" /> <span>Instant Claims Processing</span>
+                  <CheckCircle2 className="text-teal-400" /> <span>Compare 20+ Top Providers</span>
                 </li>
                 <li className="flex items-center gap-3">
-                  <CheckCircle2 className="text-teal-400" /> <span>Usage-Based Pricing</span>
+                  <CheckCircle2 className="text-teal-400" /> <span>Exclusive Online Discounts</span>
                 </li>
                 <li className="flex items-center gap-3">
-                  <CheckCircle2 className="text-teal-400" /> <span>Zero Paperwork</span>
+                  <CheckCircle2 className="text-teal-400" /> <span>Instant Approval Partners</span>
                 </li>
               </ul>
               <Link to="/compare">
-                <Button size="lg" className="bg-white text-slate-900 hover:bg-slate-100">See Full Comparison</Button>
+                <Button size="lg" className="bg-white text-slate-900 hover:bg-slate-100">
+                  View Best Offers
+                </Button>
               </Link>
             </div>
             <div className="md:w-1/2 relative">
               <div className="absolute inset-0 bg-blue-500/20 blur-3xl rounded-full" />
               <div className="relative bg-slate-800 p-8 rounded-2xl border border-slate-700 shadow-2xl">
                 <div className="flex justify-between items-center border-b border-slate-700 pb-4 mb-4">
-                  <span className="font-bold text-lg">Claim Approval Time</span>
+                  <span className="font-bold text-lg">Monthly Premium Savings</span>
                 </div>
                 <div className="space-y-6">
                   <div>
                     <div className="flex justify-between text-sm mb-2">
-                      <span className="text-slate-400">Traditional Carrier</span>
-                      <span className="text-slate-400">7 Days</span>
+                      <span className="text-slate-400">Average Traditional Cost</span>
+                      <span className="text-slate-400">$180/mo</span>
                     </div>
                     <div className="h-3 bg-slate-700 rounded-full overflow-hidden">
-                      <div className="h-full w-[80%] bg-slate-500" />
+                      <div className="h-full w-[100%] bg-slate-500" />
                     </div>
                   </div>
                   <div>
                     <div className="flex justify-between text-sm mb-2">
-                      <span className="text-white font-semibold">AI Insurer</span>
-                      <span className="text-teal-400 font-bold">3 Seconds</span>
+                      <span className="text-white font-semibold">With AI Insurers</span>
+                      <span className="text-teal-400 font-bold">$115/mo</span>
                     </div>
                     <div className="h-3 bg-slate-700 rounded-full overflow-hidden">
-                      <div className="h-full w-[5%] bg-teal-500 shadow-[0_0_10px_rgba(20,184,166,0.5)]" />
+                      <div className="h-full w-[65%] bg-teal-500 shadow-[0_0_10px_rgba(20,184,166,0.5)]" />
                     </div>
                   </div>
+                </div>
+                <div className="mt-6 pt-4 border-t border-slate-700 text-center">
+                  <p className="text-sm text-slate-400">Average savings based on 2025 user data</p>
                 </div>
               </div>
             </div>
@@ -179,8 +184,8 @@ export const Home = () => {
         <div className="container mx-auto px-4 md:px-6">
           <div className="flex justify-between items-end mb-12">
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Learning Center</h2>
-              <p className="text-slate-600 text-lg">Expert guides to help you navigate the InsurTech revolution.</p>
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Expert Guides</h2>
+              <p className="text-slate-600 text-lg">Read our latest reviews and tips to save on your next policy.</p>
             </div>
             <Link to="/blog" className="hidden md:flex items-center gap-2 text-blue-600 font-semibold hover:text-blue-700">
               View all articles <ArrowRight size={20} />
@@ -234,15 +239,22 @@ export const Home = () => {
       {/* CTA Section */}
       <section className="py-20 bg-blue-600">
         <div className="container mx-auto px-4 md:px-6 text-center text-white">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">Need Help with a Claim?</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to find the perfect plan?</h2>
           <p className="text-blue-100 text-lg max-w-2xl mx-auto mb-8">
-            Our AI Claims Assistant can guide you through the process to ensure you don't get denied.
+            Browse our directory of top-rated insurers or use our AI assistant to guide you.
           </p>
-          <Link to="/claims">
-            <Button variant="secondary" size="lg" className="bg-white text-blue-600 hover:bg-blue-50 shadow-none">
-              Start Virtual Assistant
-            </Button>
-          </Link>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link to="/compare">
+              <Button variant="secondary" size="lg" className="bg-white text-blue-600 hover:bg-blue-50 shadow-none w-full sm:w-auto">
+                Compare Rates
+              </Button>
+            </Link>
+            <Link to="/search">
+              <Button variant="outline" size="lg" className="border-blue-400 text-white hover:bg-blue-700 hover:border-blue-700 w-full sm:w-auto">
+                Find Local Agent
+              </Button>
+            </Link>
+          </div>
         </div>
       </section>
     </div>

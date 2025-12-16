@@ -8,6 +8,7 @@ import { Niches } from './pages/Niches';
 import { Tools } from './pages/Tools';
 import { Compare } from './pages/Compare';
 import { Claims } from './pages/Claims';
+import { SearchProvider } from './pages/SearchProvider';
 
 // Scroll to top on route change
 const ScrollToTop = () => {
@@ -32,6 +33,7 @@ function App() {
             <Route path="/tools" element={<Tools />} />
             <Route path="/compare" element={<Compare />} />
             <Route path="/claims" element={<Claims />} />
+            <Route path="/search" element={<SearchProvider />} />
             <Route path="/about" element={<div className="pt-32 text-center min-h-[60vh]"><h1 className="text-4xl font-bold">About Page Coming Soon</h1></div>} />
           </Routes>
         </main>

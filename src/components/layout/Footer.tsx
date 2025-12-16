@@ -1,5 +1,5 @@
 import React from 'react';
-import { Zap, Twitter, Linkedin, Facebook, Instagram } from 'lucide-react';
+import { Twitter, Linkedin, Facebook, Instagram } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export const Footer = () => {
@@ -8,9 +8,13 @@ export const Footer = () => {
       <div className="container mx-auto px-4 md:px-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
           <div className="space-y-4">
-            <div className="flex items-center gap-2 text-white">
-              <Zap className="text-blue-500" />
-              <span className="text-xl font-bold">INSURALIX</span>
+            <div className="flex items-center gap-3 text-white">
+              <img 
+                src="https://i.postimg.cc/xTwWz4ck/Gemini-Generated-Image-fnp6q5fnp6q5fnp6-(1).png" 
+                alt="Insuralix Logo" 
+                className="h-24 w-24 object-contain drop-shadow-lg"
+              />
+              <span className="text-2xl font-bold">INSURALIX</span>
             </div>
             <p className="text-sm text-slate-400 leading-relaxed">
               Revolutionizing the insurance industry through artificial intelligence, predictive analytics, and data-driven insights.
@@ -22,15 +26,15 @@ export const Footer = () => {
             <ul className="space-y-2 text-sm">
               <li><Link to="/niches" className="hover:text-blue-400 transition-colors">Insurance Niches</Link></li>
               <li><Link to="/blog" className="hover:text-blue-400 transition-colors">AI Blog</Link></li>
-              <li><Link to="#" className="hover:text-blue-400 transition-colors">Case Studies</Link></li>
-              <li><Link to="#" className="hover:text-blue-400 transition-colors">Pricing</Link></li>
+              <li><Link to="/tools" className="hover:text-blue-400 transition-colors">Free Tools</Link></li>
+              <li><Link to="/compare" className="hover:text-blue-400 transition-colors">Compare Rates</Link></li>
             </ul>
           </div>
 
           <div>
             <h4 className="text-white font-semibold mb-4">Company</h4>
             <ul className="space-y-2 text-sm">
-              <li><Link to="#" className="hover:text-blue-400 transition-colors">About Us</Link></li>
+              <li><Link to="/about" className="hover:text-blue-400 transition-colors">About Us</Link></li>
               <li><Link to="#" className="hover:text-blue-400 transition-colors">Careers</Link></li>
               <li><Link to="#" className="hover:text-blue-400 transition-colors">Privacy Policy</Link></li>
               <li><Link to="#" className="hover:text-blue-400 transition-colors">Terms of Service</Link></li>

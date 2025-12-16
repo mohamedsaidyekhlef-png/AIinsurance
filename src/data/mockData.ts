@@ -1,4 +1,4 @@
-import { Shield, Heart, Car, Home, Briefcase, Plane, Cpu, BarChart3, Lock, Zap, Search, FileText, AlertTriangle, CheckCircle } from 'lucide-react';
+import { Shield, Heart, Car, Home, Briefcase, Plane, Cpu, BarChart3, Lock, Zap, Globe, MapPin } from 'lucide-react';
 
 export const niches = [
   {
@@ -113,36 +113,188 @@ export const features = [
 ];
 
 export const partners = [
+  // USA
   {
     name: "Lemonade",
     logo: "🍋",
     affiliateLink: "https://lemonade.com/r/YOUR_AFFILIATE_ID",
-    description: "Instant everything. Killer prices. Best for Renters, Home, Car & Pet Insurance."
+    description: "Instant everything. Killer prices. Best for Renters, Home, Car & Pet.",
+    categories: ['home', 'auto', 'health'],
+    region: "USA"
   },
   {
     name: "Ethos",
     logo: "🛡️",
     affiliateLink: "https://ethoslife.com/apply?referrer=YOUR_AFFILIATE_ID",
-    description: "100% online life insurance. No medical exams for most. Instant decisions."
+    description: "100% online life insurance. No medical exams for most. Instant decisions.",
+    categories: ['health', 'life'],
+    region: "USA"
   },
   {
     name: "Hippo",
     logo: "🦛",
     affiliateLink: "https://hippo.com/quote?ref=YOUR_AFFILIATE_ID",
-    description: "Modern home insurance that uses satellite data to price your policy fairly."
+    description: "Modern home insurance that uses satellite data to price your policy fairly.",
+    categories: ['home'],
+    region: "USA"
   },
   {
     name: "Root",
     logo: "🚗",
     affiliateLink: "https://joinroot.com/?ref=YOUR_AFFILIATE_ID",
-    description: "Car insurance based on how you drive, not who you are."
+    description: "Car insurance based on how you drive, not who you are.",
+    categories: ['auto'],
+    region: "USA"
   },
   {
-    name: "Metromile",
-    logo: "📉",
-    affiliateLink: "https://metromile.com/?ref=YOUR_AFFILIATE_ID",
-    description: "Pay-per-mile car insurance. Perfect for low-mileage drivers."
+    name: "Coalition",
+    logo: "🔒",
+    affiliateLink: "https://www.coalitioninc.com/",
+    description: "Active cyber insurance that helps prevent attacks before they happen.",
+    categories: ['cyber', 'business'],
+    region: "Global"
   },
+  
+  // Canada
+  {
+    name: "Manulife",
+    logo: "🍁",
+    affiliateLink: "https://www.manulife.ca/",
+    description: "Canada's leading provider with Vitality AI wellness integration.",
+    categories: ['life', 'health', 'travel'],
+    region: "Canada"
+  },
+  {
+    name: "Intact",
+    logo: "🏢",
+    affiliateLink: "https://www.intact.ca/",
+    description: "Largest provider of property and casualty insurance in Canada.",
+    categories: ['auto', 'home', 'business'],
+    region: "Canada"
+  },
+  {
+    name: "Sun Life",
+    logo: "☀️",
+    affiliateLink: "https://www.sunlife.ca/",
+    description: "Digital-first life and health solutions for Canadians.",
+    categories: ['life', 'health'],
+    region: "Canada"
+  },
+
+  // Europe (UK, Germany, France, etc.)
+  {
+    name: "Allianz",
+    logo: "🦅",
+    affiliateLink: "https://www.allianz.com/",
+    description: "Global giant using advanced analytics for tailored European coverage.",
+    categories: ['auto', 'home', 'business', 'travel'],
+    region: "Europe"
+  },
+  {
+    name: "AXA",
+    logo: "🟦",
+    affiliateLink: "https://www.axa.com/",
+    description: "Tech-forward insurer offering blockchain-based flight delay products.",
+    categories: ['health', 'travel', 'auto'],
+    region: "Europe"
+  },
+  {
+    name: "Aviva",
+    logo: "🟡",
+    affiliateLink: "https://www.aviva.co.uk/",
+    description: "UK's leading insurer with the 'Aviva Drive' telematics app.",
+    categories: ['auto', 'home', 'life'],
+    region: "Europe"
+  },
+  {
+    name: "Zurich",
+    logo: "🇨🇭",
+    affiliateLink: "https://www.zurich.com/",
+    description: "Swiss precision meets AI risk modeling for global businesses.",
+    categories: ['business', 'cyber'],
+    region: "Europe"
+  },
+  {
+    name: "Admiral",
+    logo: "⚓",
+    affiliateLink: "https://www.admiral.com/",
+    description: "Multi-car discounts and AI-driven pricing for UK drivers.",
+    categories: ['auto', 'home'],
+    region: "Europe"
+  },
+
+  // Australia
+  {
+    name: "QBE",
+    logo: "🇦🇺",
+    affiliateLink: "https://www.qbe.com/au",
+    description: "Australia's largest global insurer utilizing AI for climate risk.",
+    categories: ['business', 'auto', 'home'],
+    region: "Australia"
+  },
+  {
+    name: "Suncorp",
+    logo: "☀️",
+    affiliateLink: "https://www.suncorp.com.au/",
+    description: "Leading general insurer in Australia with digital claims processing.",
+    categories: ['home', 'auto', 'health'],
+    region: "Australia"
+  },
+  {
+    name: "Youi",
+    logo: "🫵",
+    affiliateLink: "https://www.youi.com.au/",
+    description: "Insures what you actually use. Strong focus on customer data.",
+    categories: ['auto', 'home'],
+    region: "Australia"
+  },
+  {
+    name: "Nib",
+    logo: "🟢",
+    affiliateLink: "https://www.nib.com.au/",
+    description: "Health insurance with AI-powered health management programs.",
+    categories: ['health', 'travel'],
+    region: "Australia"
+  }
+];
+
+export const officialDirectories = [
+  {
+    region: "USA",
+    links: [
+      { name: 'AM Best', url: 'https://web.ambest.com/home', desc: 'Credit ratings & financial strength.' },
+      { name: 'NAIC Consumer Search', url: 'https://content.naic.org/', desc: 'National Association of Insurance Commissioners.' },
+      { name: 'Healthcare.gov', url: 'https://www.healthcare.gov/', desc: 'Official Health Insurance Marketplace.' },
+      { name: 'NIPR', url: 'https://nipr.com/', desc: 'National Insurance Producer Registry.' }
+    ]
+  },
+  {
+    region: "Canada",
+    links: [
+      { name: 'OSFI', url: 'https://www.osfi-bsif.gc.ca/', desc: 'Office of the Superintendent of Financial Institutions.' },
+      { name: 'IBC', url: 'http://www.ibc.ca/', desc: 'Insurance Bureau of Canada - Consumer Info.' },
+      { name: 'OLHI', url: 'https://olhi.ca/', desc: 'OmbudService for Life & Health Insurance.' },
+      { name: 'GAO', url: 'https://www.gao.ca/', desc: 'General Insurance OmbudService.' }
+    ]
+  },
+  {
+    region: "Europe",
+    links: [
+      { name: 'EIOPA', url: 'https://www.eiopa.europa.eu/', desc: 'European Insurance and Occupational Pensions Authority.' },
+      { name: 'FCA (UK)', url: 'https://www.fca.org.uk/', desc: 'Financial Conduct Authority Registry.' },
+      { name: 'ABI (UK)', url: 'https://www.abi.org.uk/', desc: 'Association of British Insurers.' },
+      { name: 'Insurance Europe', url: 'https://www.insuranceeurope.eu/', desc: 'Federation of European insurers.' }
+    ]
+  },
+  {
+    region: "Australia",
+    links: [
+      { name: 'APRA', url: 'https://www.apra.gov.au/', desc: 'Australian Prudential Regulation Authority.' },
+      { name: 'AFCA', url: 'https://www.afca.org.au/', desc: 'Australian Financial Complaints Authority.' },
+      { name: 'ICA', url: 'https://insurancecouncil.com.au/', desc: 'Insurance Council of Australia.' },
+      { name: 'PrivateHealth.gov.au', url: 'https://www.privatehealth.gov.au/', desc: 'Australian Government Health Fund comparison.' }
+    ]
+  }
 ];
 
 export const comparisonData = [
