@@ -3,6 +3,7 @@ import { blogPosts } from '../data/mockData';
 import { motion } from 'framer-motion';
 import { Search, Clock, ChevronRight, Mail, User } from 'lucide-react';
 import { Button } from '../components/ui/Button';
+import { Link } from 'react-router-dom';
 
 export const Blog = () => {
   const [activeCategory, setActiveCategory] = useState('All');
@@ -78,102 +79,105 @@ export const Blog = () => {
             animate={{ opacity: 1, y: 0 }}
             className="mb-20"
           >
-            <div className="group relative rounded-[2rem] overflow-hidden bg-white shadow-2xl shadow-slate-200/50 border border-slate-100 grid grid-cols-1 lg:grid-cols-2">
-              <div className="relative h-72 lg:h-auto overflow-hidden">
-                <div className="absolute inset-0 bg-blue-600/10 group-hover:bg-transparent transition-colors z-10" />
-                <img 
-                  src={featuredPost.image} 
-                  alt={featuredPost.title} 
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                />
+            <Link to={`/blog/${featuredPost.id}`}>
+              <div className="group relative rounded-[2rem] overflow-hidden bg-white shadow-2xl shadow-slate-200/50 border border-slate-100 grid grid-cols-1 lg:grid-cols-2 cursor-pointer">
+                <div className="relative h-72 lg:h-auto overflow-hidden">
+                  <div className="absolute inset-0 bg-blue-600/10 group-hover:bg-transparent transition-colors z-10" />
+                  <img 
+                    src={featuredPost.image} 
+                    alt={featuredPost.title} 
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                </div>
+                <div className="p-8 md:p-12 lg:p-16 flex flex-col justify-center relative">
+                  <div className="absolute top-0 right-0 p-8 opacity-5 pointer-events-none">
+                    <img src="https://i.postimg.cc/xTwWz4ck/Gemini-Generated-Image-fnp6q5fnp6q5fnp6-(1).png" className="w-40 h-40 grayscale" alt="watermark" />
+                  </div>
+                  
+                  <div className="flex items-center gap-3 mb-6">
+                    <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-bold uppercase tracking-wider">
+                      Featured Story
+                    </span>
+                    <span className="text-slate-400 text-sm flex items-center gap-1">
+                      <Clock size={14} /> {featuredPost.readTime}
+                    </span>
+                  </div>
+                  
+                  <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 mb-6 leading-tight group-hover:text-blue-600 transition-colors">
+                    {featuredPost.title}
+                  </h2>
+                  <p className="text-slate-600 text-lg mb-8 leading-relaxed">
+                    {featuredPost.excerpt}
+                  </p>
+                  
+                  <div className="flex items-center justify-between mt-auto pt-8 border-t border-slate-100">
+                    <div className="flex items-center gap-3">
+                        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-teal-400 flex items-center justify-center text-white font-bold text-lg shadow-md">
+                          {featuredPost.author.charAt(0)}
+                        </div>
+                        <div>
+                          <p className="text-base font-bold text-slate-900">{featuredPost.author}</p>
+                          <p className="text-xs text-slate-500 font-medium">{featuredPost.date}</p>
+                        </div>
+                    </div>
+                    <Button variant="ghost" className="text-blue-600 hover:bg-blue-50 group-hover:translate-x-2 transition-all font-semibold">
+                      Read Article <ChevronRight size={18} />
+                    </Button>
+                  </div>
+                </div>
               </div>
-              <div className="p-8 md:p-12 lg:p-16 flex flex-col justify-center relative">
-                <div className="absolute top-0 right-0 p-8 opacity-5 pointer-events-none">
-                   <img src="https://i.postimg.cc/xTwWz4ck/Gemini-Generated-Image-fnp6q5fnp6q5fnp6-(1).png" className="w-40 h-40 grayscale" alt="watermark" />
-                </div>
-                
-                <div className="flex items-center gap-3 mb-6">
-                  <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-bold uppercase tracking-wider">
-                    Featured Story
-                  </span>
-                  <span className="text-slate-400 text-sm flex items-center gap-1">
-                    <Clock size={14} /> {featuredPost.readTime}
-                  </span>
-                </div>
-                
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 mb-6 leading-tight group-hover:text-blue-600 transition-colors cursor-pointer">
-                  {featuredPost.title}
-                </h2>
-                <p className="text-slate-600 text-lg mb-8 leading-relaxed">
-                  {featuredPost.excerpt}
-                </p>
-                
-                <div className="flex items-center justify-between mt-auto pt-8 border-t border-slate-100">
-                   <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-teal-400 flex items-center justify-center text-white font-bold text-lg shadow-md">
-                        {featuredPost.author.charAt(0)}
-                      </div>
-                      <div>
-                        <p className="text-base font-bold text-slate-900">{featuredPost.author}</p>
-                        <p className="text-xs text-slate-500 font-medium">{featuredPost.date}</p>
-                      </div>
-                   </div>
-                   <Button variant="ghost" className="text-blue-600 hover:bg-blue-50 group-hover:translate-x-2 transition-all font-semibold">
-                     Read Article <ChevronRight size={18} />
-                   </Button>
-                </div>
-              </div>
-            </div>
+            </Link>
           </motion.div>
         )}
 
         {/* Regular Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-24">
           {gridPosts.map((post, idx) => (
-             <motion.article 
-             key={post.id}
-             initial={{ opacity: 0, y: 20 }}
-             whileInView={{ opacity: 1, y: 0 }}
-             viewport={{ once: true }}
-             transition={{ delay: idx * 0.1 }}
-             className="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-blue-900/10 border border-slate-100 transition-all duration-300 flex flex-col h-full group hover:-translate-y-1"
-           >
-             <div className="h-60 overflow-hidden relative">
-               <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" />
-               <img 
-                 src={post.image} 
-                 alt={post.title} 
-                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-               />
-               <span className="absolute top-4 left-4 z-20 bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-full text-xs font-bold text-slate-900 shadow-sm border border-slate-100">
-                 {post.category}
-               </span>
-             </div>
-             <div className="p-8 flex flex-col flex-grow">
-               <div className="flex items-center gap-3 text-xs font-medium text-slate-400 mb-4">
-                  <span className="flex items-center gap-1"><Clock size={14} /> {post.date}</span>
-                  <span className="w-1 h-1 rounded-full bg-slate-300"></span>
-                  <span>{post.readTime}</span>
-               </div>
-               <h3 className="text-xl font-bold text-slate-900 mb-3 leading-snug group-hover:text-blue-600 transition-colors">
-                 {post.title}
-               </h3>
-               <p className="text-slate-600 text-sm mb-6 line-clamp-3 flex-grow leading-relaxed">
-                 {post.excerpt}
-               </p>
-               <div className="pt-6 border-t border-slate-50 flex items-center justify-between mt-auto">
-                 <div className="flex items-center gap-2.5">
-                   <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-xs font-bold text-slate-500 border border-slate-200">
-                      <User size={14} />
-                   </div>
-                   <span className="text-xs font-bold text-slate-700">{post.author}</span>
-                 </div>
-                 <span className="text-blue-600 text-xs font-bold group-hover:translate-x-1 transition-transform flex items-center gap-1">
-                   Read <ChevronRight size={14} />
+             <Link key={post.id} to={`/blog/${post.id}`}>
+               <motion.article 
+               initial={{ opacity: 0, y: 20 }}
+               whileInView={{ opacity: 1, y: 0 }}
+               viewport={{ once: true }}
+               transition={{ delay: idx * 0.1 }}
+               className="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-blue-900/10 border border-slate-100 transition-all duration-300 flex flex-col h-full group hover:-translate-y-1 cursor-pointer"
+             >
+               <div className="h-60 overflow-hidden relative">
+                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" />
+                 <img 
+                   src={post.image} 
+                   alt={post.title} 
+                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                 />
+                 <span className="absolute top-4 left-4 z-20 bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-full text-xs font-bold text-slate-900 shadow-sm border border-slate-100">
+                   {post.category}
                  </span>
                </div>
-             </div>
-           </motion.article>
+               <div className="p-8 flex flex-col flex-grow">
+                 <div className="flex items-center gap-3 text-xs font-medium text-slate-400 mb-4">
+                    <span className="flex items-center gap-1"><Clock size={14} /> {post.date}</span>
+                    <span className="w-1 h-1 rounded-full bg-slate-300"></span>
+                    <span>{post.readTime}</span>
+                 </div>
+                 <h3 className="text-xl font-bold text-slate-900 mb-3 leading-snug group-hover:text-blue-600 transition-colors">
+                   {post.title}
+                 </h3>
+                 <p className="text-slate-600 text-sm mb-6 line-clamp-3 flex-grow leading-relaxed">
+                   {post.excerpt}
+                 </p>
+                 <div className="pt-6 border-t border-slate-50 flex items-center justify-between mt-auto">
+                   <div className="flex items-center gap-2.5">
+                     <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-xs font-bold text-slate-500 border border-slate-200">
+                        <User size={14} />
+                     </div>
+                     <span className="text-xs font-bold text-slate-700">{post.author}</span>
+                   </div>
+                   <span className="text-blue-600 text-xs font-bold group-hover:translate-x-1 transition-transform flex items-center gap-1">
+                     Read <ChevronRight size={14} />
+                   </span>
+                 </div>
+               </div>
+             </motion.article>
+           </Link>
           ))}
         </div>
 

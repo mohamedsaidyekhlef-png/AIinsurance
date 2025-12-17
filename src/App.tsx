@@ -4,6 +4,7 @@ import { Header } from './components/layout/Header';
 import { Footer } from './components/layout/Footer';
 import { Home } from './pages/Home';
 import { Blog } from './pages/Blog';
+import { BlogPost } from './pages/BlogPost'; // Import new page
 import { Niches } from './pages/Niches';
 import { Tools } from './pages/Tools';
 import { Compare } from './pages/Compare';
@@ -43,6 +44,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:id" element={<BlogPost />} /> {/* Dynamic Blog Route */}
             <Route path="/niches" element={<Niches />} />
             
             {/* Tools Routes */}
