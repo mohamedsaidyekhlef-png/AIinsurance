@@ -1,11 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { FileText, BarChart3, Shield, Activity, Camera, Smartphone, CloudLightning, ArrowRight } from 'lucide-react';
-import { Button } from '../components/ui/Button';
+import { FileText, BarChart3, Shield, Activity, Camera, Smartphone, CloudLightning, ArrowRight, Sliders, Zap } from 'lucide-react';
+import { RiskPulse } from '../components/tools/RiskPulse';
+import { LiveTicker } from '../components/tools/LiveTicker';
 
 export const Tools = () => {
   const toolsList = [
+    { id: 'scenario-stress-test', name: 'Scenario Stress Test', icon: Sliders, color: 'text-orange-600', bg: 'bg-orange-50', desc: 'Simulate accidents & storms to see costs.' },
+    { id: 'optimization', name: 'Risk Optimizer', icon: Zap, color: 'text-yellow-500', bg: 'bg-yellow-50', desc: 'One-click policy swap proposal.' },
     { id: 'policy-analyzer', name: 'Policy Analyzer', icon: FileText, color: 'text-blue-600', bg: 'bg-blue-50', desc: 'Upload PDF to decode fine print & exclusions.' },
     { id: 'premium-predictor', name: 'Premium Predictor', icon: BarChart3, color: 'text-teal-600', bg: 'bg-teal-50', desc: 'Forecast future rate changes with AI.' },
     { id: 'gap-finder', name: 'Gap Finder', icon: Shield, color: 'text-rose-600', bg: 'bg-rose-50', desc: 'Find missing coverage in 30 seconds.' },
@@ -18,14 +21,22 @@ export const Tools = () => {
   return (
     <div className="pt-32 pb-20 min-h-screen bg-slate-50">
       <div className="container mx-auto px-4 md:px-6">
+        
+        {/* Dashboard Header - Risk Pulse */}
+        <RiskPulse />
+
+        {/* Live Ticker */}
+        <LiveTicker />
+
         <div className="max-w-3xl mx-auto text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">AI Insurance Toolkit</h1>
+          <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">AI Insurance Command Center</h2>
           <p className="text-xl text-slate-600">
             Professional-grade utilities to analyze risk, predict costs, and secure your assets. Free forever.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Tools Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
           {toolsList.map((tool, idx) => (
             <Link key={tool.id} to={`/tools/${tool.id}`} className="group">
               <motion.div
@@ -50,6 +61,23 @@ export const Tools = () => {
             </Link>
           ))}
         </div>
+
+        {/* CTA Section */}
+        <div className="bg-gradient-to-r from-blue-600 to-teal-500 rounded-3xl p-10 md:p-16 text-center text-white shadow-2xl relative overflow-hidden">
+           <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10" />
+           <div className="relative z-10">
+              <h2 className="text-3xl md:text-5xl font-bold mb-6">Ready to Optimize Your Portfolio?</h2>
+              <p className="text-blue-100 text-lg md:text-xl max-w-2xl mx-auto mb-10">
+                 Use our "One-Click Optimization" agent to scan the market and swap to better policies instantly.
+              </p>
+              <Link to="/tools/optimization">
+                 <button className="bg-white text-blue-600 font-bold text-lg px-10 py-4 rounded-full shadow-lg hover:bg-blue-50 transition-colors">
+                    Start Optimization
+                 </button>
+              </Link>
+           </div>
+        </div>
+
       </div>
     </div>
   );

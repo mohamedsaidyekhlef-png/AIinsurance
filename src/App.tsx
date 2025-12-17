@@ -7,7 +7,6 @@ import { Blog } from './pages/Blog';
 import { Niches } from './pages/Niches';
 import { Tools } from './pages/Tools';
 import { Compare } from './pages/Compare';
-import { Claims } from './pages/Claims';
 import { SearchProvider } from './pages/SearchProvider';
 import { About } from './pages/About';
 import { PrivacyPolicy } from './pages/PrivacyPolicy';
@@ -22,6 +21,8 @@ import { LifeEventSimulatorPage } from './pages/tools/LifeEventSimulatorPage';
 import { EvidenceVaultPage } from './pages/tools/EvidenceVaultPage';
 import { TelematicsOptimizerPage } from './pages/tools/TelematicsOptimizerPage';
 import { DisasterAlertPage } from './pages/tools/DisasterAlertPage';
+import { ScenarioStressTestPage } from './pages/tools/ScenarioStressTestPage';
+import { OneClickOptimizationPage } from './pages/tools/OneClickOptimizationPage';
 
 // Scroll to top on route change
 const ScrollToTop = () => {
@@ -53,9 +54,10 @@ function App() {
             <Route path="/tools/evidence-vault" element={<EvidenceVaultPage />} />
             <Route path="/tools/telematics-optimizer" element={<TelematicsOptimizerPage />} />
             <Route path="/tools/disaster-alert" element={<DisasterAlertPage />} />
+            <Route path="/tools/scenario-stress-test" element={<ScenarioStressTestPage />} />
+            <Route path="/tools/optimization" element={<OneClickOptimizationPage />} />
 
             <Route path="/compare" element={<Compare />} />
-            <Route path="/claims" element={<Claims />} />
             <Route path="/search" element={<SearchProvider />} />
             <Route path="/about" element={<About />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />

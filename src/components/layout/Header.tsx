@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, TrendingUp, ChevronDown, FileText, BarChart3, Shield, Activity, Camera, Smartphone, CloudLightning } from 'lucide-react';
+import { Menu, X, TrendingUp, ChevronDown, FileText, BarChart3, Shield, Activity, Camera, Smartphone, CloudLightning, Sliders, Zap } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '../../lib/utils';
@@ -25,6 +25,9 @@ export const Header = () => {
   }, [location]);
 
   const toolsMenu = [
+    { name: 'Risk Pulse', path: '/tools', icon: Activity, color: 'text-red-600', desc: 'Financial Health Score' },
+    { name: 'Scenario Stress Test', path: '/tools/scenario-stress-test', icon: Sliders, color: 'text-orange-600', desc: 'Simulate accidents & storms' },
+    { name: 'Risk Optimizer', path: '/tools/optimization', icon: Zap, color: 'text-yellow-500', desc: 'One-click policy swap' },
     { name: 'Policy Analyzer', path: '/tools/policy-analyzer', icon: FileText, color: 'text-blue-600', desc: 'Decode fine print' },
     { name: 'Premium Predictor', path: '/tools/premium-predictor', icon: BarChart3, color: 'text-teal-600', desc: 'Forecast rates' },
     { name: 'Gap Finder', path: '/tools/gap-finder', icon: Shield, color: 'text-rose-600', desc: 'Find missing coverage' },
@@ -38,7 +41,7 @@ export const Header = () => {
     { name: 'Home', path: '/' },
     // Tools is handled separately
     { name: 'Compare', path: '/compare' },
-    { name: 'Claims Help', path: '/claims' },
+    // Claims Help Removed
     { name: 'Directory', path: '/search' },
     { name: 'News & Guides', path: '/blog' },
   ];
@@ -95,7 +98,7 @@ export const Header = () => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 10 }}
                   transition={{ duration: 0.2 }}
-                  className="absolute top-full left-1/2 -translate-x-1/2 w-[600px] bg-white rounded-2xl shadow-xl border border-slate-100 p-6 grid grid-cols-2 gap-4 z-50"
+                  className="absolute top-full left-1/2 -translate-x-1/2 w-[700px] bg-white rounded-2xl shadow-xl border border-slate-100 p-6 grid grid-cols-2 gap-4 z-50"
                 >
                   <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-white rotate-45 border-t border-l border-slate-100" />
                   {toolsMenu.map((tool) => (
