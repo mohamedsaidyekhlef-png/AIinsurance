@@ -19,6 +19,16 @@ export const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => { document.body.style.overflow = 'unset'; };
+  }, [isOpen]);
+
   useEffect(() => {
     setIsOpen(false);
     setToolsDropdownOpen(false);
@@ -40,9 +50,7 @@ export const Header = () => {
 
   const navLinks = [
     { name: 'Home', path: '/' },
-    // Tools is handled separately
     { name: 'Compare', path: '/compare' },
-    // Claims Help Removed
     { name: 'Directory', path: '/search' },
     { name: 'News & Guides', path: '/blog' },
   ];
@@ -51,27 +59,28 @@ export const Header = () => {
     <header 
       className={cn(
         "fixed top-0 w-full z-50 transition-all duration-300 border-b",
-        scrolled ? "bg-white/90 backdrop-blur-md border-slate-200 py-2 shadow-sm" : "bg-transparent border-transparent py-4"
+        (scrolled || isOpen) ? "bg-white/95 backdrop-blur-md border-slate-200 py-2 shadow-sm" : "bg-transparent border-transparent py-2 md:py-4"
       )}
     >
-      <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
-        {/* Logo Section */}
-        <Link to="/" className="flex items-center gap-0 group shrink-0 z-50">
+      <div className="container mx-auto px-4 md:px-6 flex items-center justify-between relative z-50">
+        {/* Logo Section - Responsive Sizing */}
+        <Link to="/" className="flex items-center gap-2 group shrink-0" onClick={() => setIsOpen(false)}>
           <div className="relative">
-            <div className="absolute inset-0 bg-blue-500 blur-3xl opacity-20 group-hover:opacity-30 transition-opacity rounded-full scale-100" />
+            <div className="absolute inset-0 bg-blue-500 blur-2xl opacity-20 group-hover:opacity-30 transition-opacity rounded-full scale-100" />
+            {/* Logo is smaller on mobile (h-12) and larger on desktop (md:h-20 lg:h-28) to prevent layout break */}
             <img 
               src="https://i.postimg.cc/xTwWz4ck/Gemini-Generated-Image-fnp6q5fnp6q5fnp6-(1).png" 
               alt="Insuralix Logo" 
-              className="h-28 w-28 md:h-36 md:w-36 object-contain relative z-10 transition-transform duration-300 group-hover:scale-105 drop-shadow-md"
+              className="h-12 w-12 md:h-20 md:w-20 lg:h-28 lg:w-28 object-contain relative z-10 transition-transform duration-300 group-hover:scale-105 drop-shadow-md"
             />
           </div>
-          <span className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-teal-500 tracking-tight hidden sm:block -ml-2">
+          <span className="text-xl md:text-2xl lg:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-teal-500 tracking-tight">
             INSURALIX
           </span>
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden lg:flex items-center gap-6 xl:gap-8 whitespace-nowrap">
+        <nav className="hidden lg:flex items-center gap-4 xl:gap-8 whitespace-nowrap">
           <Link to="/" className={cn("text-sm font-medium transition-colors hover:text-blue-600", location.pathname === '/' ? "text-blue-600" : "text-slate-600")}>
             Home
           </Link>
@@ -146,37 +155,41 @@ export const Header = () => {
 
         {/* Mobile Toggle */}
         <button 
-          className="lg:hidden text-slate-700 p-2 z-50"
+          className="lg:hidden text-slate-700 p-2 z-50 rounded-lg hover:bg-slate-100 transition-colors"
           onClick={() => setIsOpen(!isOpen)}
+          aria-label="Toggle menu"
         >
           {isOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
       </div>
 
-      {/* Mobile Nav */}
+      {/* Mobile Nav Overlay */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: '100vh' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden fixed inset-0 bg-white z-40 pt-24 overflow-y-auto"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.2 }}
+            className="lg:hidden fixed inset-0 bg-white z-40 pt-[80px] overflow-y-auto"
           >
             <div className="container mx-auto px-4 pb-10 flex flex-col gap-2">
-              <Link to="/" onClick={() => setIsOpen(false)} className="text-xl font-bold text-slate-900 py-3 border-b border-slate-50">Home</Link>
+              <Link to="/" onClick={() => setIsOpen(false)} className="text-lg font-bold text-slate-900 py-4 border-b border-slate-50 flex items-center justify-between">
+                Home <span className="text-slate-300">→</span>
+              </Link>
               
-              <div className="py-3 border-b border-slate-50">
-                <div className="text-xl font-bold text-slate-900 mb-4">Tools</div>
-                <div className="grid grid-cols-1 gap-3 pl-4">
+              <div className="py-4 border-b border-slate-50">
+                <div className="text-lg font-bold text-slate-900 mb-4">Tools</div>
+                <div className="grid grid-cols-1 gap-1 pl-2">
                   {toolsMenu.map((tool) => (
                     <Link 
                       key={tool.name} 
                       to={tool.path}
                       onClick={() => setIsOpen(false)}
-                      className="flex items-center gap-3 text-slate-600"
+                      className="flex items-center gap-3 text-slate-600 py-2.5 px-2 rounded-lg hover:bg-slate-50"
                     >
                       <tool.icon size={18} className={tool.color} />
-                      <span className="font-medium">{tool.name}</span>
+                      <span className="font-medium text-sm">{tool.name}</span>
                     </Link>
                   ))}
                 </div>
@@ -187,14 +200,16 @@ export const Header = () => {
                   key={link.name} 
                   to={link.path}
                   onClick={() => setIsOpen(false)}
-                  className="text-xl font-bold text-slate-900 py-3 border-b border-slate-50"
+                  className="text-lg font-bold text-slate-900 py-4 border-b border-slate-50 flex items-center justify-between"
                 >
-                  {link.name}
+                  {link.name} <span className="text-slate-300">→</span>
                 </Link>
               ))}
               
-              <Link to="/compare" className="mt-6" onClick={() => setIsOpen(false)}>
-                <Button className="w-full bg-teal-500 hover:bg-teal-600 py-6 text-lg">View Top Offers</Button>
+              <Link to="/compare" className="mt-8" onClick={() => setIsOpen(false)}>
+                <Button className="w-full bg-teal-500 hover:bg-teal-600 py-4 text-lg shadow-lg shadow-teal-500/20">
+                  View Top Offers
+                </Button>
               </Link>
             </div>
           </motion.div>

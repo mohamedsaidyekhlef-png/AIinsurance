@@ -33,9 +33,9 @@ export const Home = () => {
   return (
     <div className="w-full overflow-hidden">
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden bg-slate-50">
-        <div className="absolute top-0 right-0 -translate-y-1/4 translate-x-1/4 w-[800px] h-[800px] bg-blue-100/50 rounded-full blur-3xl opacity-50 pointer-events-none" />
-        <div className="absolute bottom-0 left-0 translate-y-1/4 -translate-x-1/4 w-[600px] h-[600px] bg-teal-100/50 rounded-full blur-3xl opacity-50 pointer-events-none" />
+      <section className="relative pt-28 pb-16 md:pt-40 md:pb-24 lg:pt-48 lg:pb-32 overflow-hidden bg-slate-50">
+        <div className="absolute top-0 right-0 -translate-y-1/4 translate-x-1/4 w-[400px] md:w-[800px] h-[400px] md:h-[800px] bg-blue-100/50 rounded-full blur-3xl opacity-50 pointer-events-none" />
+        <div className="absolute bottom-0 left-0 translate-y-1/4 -translate-x-1/4 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-teal-100/50 rounded-full blur-3xl opacity-50 pointer-events-none" />
         
         <div className="container mx-auto px-4 md:px-6 relative z-10">
           <div className="max-w-5xl mx-auto text-center">
@@ -44,12 +44,12 @@ export const Home = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <span className="inline-block py-1 px-3 rounded-full bg-teal-100 text-teal-700 text-sm font-semibold mb-8 border border-teal-200">
+              <span className="inline-block py-1 px-3 rounded-full bg-teal-100 text-teal-700 text-xs md:text-sm font-semibold mb-6 md:mb-8 border border-teal-200">
                 Global Insurance Marketplace
               </span>
               
-              {/* Animated Headings */}
-              <div className="h-[140px] md:h-[180px] relative flex items-center justify-center mb-6">
+              {/* Animated Headings - Responsive Height & Font Size */}
+              <div className="h-[140px] sm:h-[160px] md:h-[180px] relative flex items-center justify-center mb-4 md:mb-6">
                 <AnimatePresence mode="wait">
                   <motion.h1
                     key={headingIndex}
@@ -57,29 +57,29 @@ export const Home = () => {
                     animate={{ y: 0, opacity: 1 }}
                     exit={{ y: -20, opacity: 0 }}
                     transition={{ duration: 0.5, ease: "easeOut" }}
-                    className="text-5xl md:text-7xl font-bold tracking-tight text-slate-900 leading-tight absolute w-full px-4"
+                    className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-slate-900 leading-tight absolute w-full px-2"
                   >
                     {headings[headingIndex]}
                   </motion.h1>
                 </AnimatePresence>
               </div>
 
-              <p className="text-xl text-slate-600 mb-10 max-w-2xl mx-auto leading-relaxed">
+              <p className="text-lg md:text-xl text-slate-600 mb-8 md:mb-10 max-w-2xl mx-auto leading-relaxed px-4">
                 We analyze hundreds of insurance providers to find you the best coverage. Whether you need to understand your insurance policy or find e insurance solutions, we have the tools.
               </p>
 
               {/* AI Search Bar */}
-              <form onSubmit={handleSearch} className="max-w-xl mx-auto mb-12 relative">
+              <form onSubmit={handleSearch} className="max-w-xl mx-auto mb-10 md:mb-12 relative px-2">
                 <div className="relative flex items-center">
                   <Search className="absolute left-4 text-slate-400" size={20} />
                   <input 
                     type="text" 
-                    placeholder="Search providers in your city (e.g. 'London', 'New York')" 
-                    className="w-full pl-12 pr-4 py-4 rounded-full border border-slate-200 shadow-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-lg"
+                    placeholder="Search providers in your city..." 
+                    className="w-full pl-12 pr-20 md:pr-4 py-3 md:py-4 rounded-full border border-slate-200 shadow-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-base md:text-lg"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                   />
-                  <Button type="submit" className="absolute right-2 top-2 bottom-2 rounded-full px-6">
+                  <Button type="submit" className="absolute right-1.5 top-1.5 bottom-1.5 rounded-full px-4 md:px-6 text-sm md:text-base">
                     Find
                   </Button>
                 </div>
@@ -87,11 +87,11 @@ export const Home = () => {
 
               {/* Trust Bar */}
               <div className="flex flex-col items-center gap-4">
-                <p className="text-sm text-slate-500 font-medium uppercase tracking-widest">Compare Top Providers</p>
-                <div className="flex flex-wrap justify-center gap-8 md:gap-12 opacity-70 grayscale hover:grayscale-0 transition-all duration-500">
+                <p className="text-xs md:text-sm text-slate-500 font-medium uppercase tracking-widest">Compare Top Providers</p>
+                <div className="flex flex-wrap justify-center gap-6 md:gap-12 opacity-70 grayscale hover:grayscale-0 transition-all duration-500 px-4">
                   {partners.slice(0, 5).map((p, i) => (
-                    <div key={i} className="flex items-center gap-2 text-xl font-bold text-slate-700">
-                      <span className="text-2xl">{p.logo}</span> {p.name}
+                    <div key={i} className="flex items-center gap-2 text-lg md:text-xl font-bold text-slate-700">
+                      <span className="text-2xl">{p.logo}</span> <span className="hidden sm:inline">{p.name}</span>
                     </div>
                   ))}
                 </div>
@@ -102,14 +102,14 @@ export const Home = () => {
       </section>
 
       {/* Value-First Tools Teaser */}
-      <section className="py-20 bg-white">
+      <section className="py-16 md:py-20 bg-white">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="text-center mb-16">
+          <div className="text-center mb-12 md:mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Free Insurance Tools</h2>
             <p className="text-slate-600 text-lg">Smart utilities to help you understand insurance coverage and make better financial decisions.</p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             <Link to="/tools/policy-analyzer" className="group">
               <div className="p-8 rounded-2xl bg-slate-50 border border-slate-100 hover:shadow-xl transition-all duration-300 h-full">
                 <div className="w-14 h-14 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
@@ -147,11 +147,11 @@ export const Home = () => {
       </section>
 
       {/* Knowledge Hub (SEO Glossary) */}
-      <section className="py-20 bg-slate-50 border-t border-slate-200">
+      <section className="py-16 md:py-20 bg-slate-50 border-t border-slate-200">
         <div className="container mx-auto px-4 md:px-6">
           <div className="flex flex-col md:flex-row items-center justify-between mb-12">
-            <div className="mb-6 md:mb-0">
-              <div className="flex items-center gap-2 text-blue-600 font-bold mb-2">
+            <div className="mb-6 md:mb-0 text-center md:text-left w-full">
+              <div className="flex items-center justify-center md:justify-start gap-2 text-blue-600 font-bold mb-2">
                 <BookOpen size={20} /> <span>Insurance Knowledge Hub</span>
               </div>
               <h2 className="text-3xl md:text-4xl font-bold text-slate-900">Common Insurance Terms</h2>
@@ -206,34 +206,36 @@ export const Home = () => {
       </section>
 
       {/* Comparison Teaser */}
-      <section className="py-24 bg-slate-900 text-white overflow-hidden">
+      <section className="py-16 md:py-24 bg-slate-900 text-white overflow-hidden">
         <div className="container mx-auto px-4 md:px-6 relative z-10">
           <div className="flex flex-col md:flex-row items-center justify-between gap-12">
-            <div className="md:w-1/2">
+            <div className="md:w-1/2 text-center md:text-left">
               <h2 className="text-3xl md:text-5xl font-bold mb-6">Stop Overpaying for Legacy Insurance</h2>
               <p className="text-slate-400 text-lg mb-8 leading-relaxed">
                 Modern AI-first carriers offer the same coverage for up to 30% less. We've partnered with the best tech-forward insurers to bring you exclusive rates.
               </p>
-              <ul className="space-y-4 mb-8">
+              <ul className="space-y-4 mb-8 inline-block text-left">
                 <li className="flex items-center gap-3">
-                  <CheckCircle2 className="text-teal-400" /> <span>Compare 20+ Top <strong>Insurance Providers</strong></span>
+                  <CheckCircle2 className="text-teal-400 shrink-0" /> <span>Compare 20+ Top <strong>Insurance Providers</strong></span>
                 </li>
                 <li className="flex items-center gap-3">
-                  <CheckCircle2 className="text-teal-400" /> <span>Exclusive <strong>Online Insurance</strong> Discounts</span>
+                  <CheckCircle2 className="text-teal-400 shrink-0" /> <span>Exclusive <strong>Online Insurance</strong> Discounts</span>
                 </li>
                 <li className="flex items-center gap-3">
-                  <CheckCircle2 className="text-teal-400" /> <span>Instant Approval Partners</span>
+                  <CheckCircle2 className="text-teal-400 shrink-0" /> <span>Instant Approval Partners</span>
                 </li>
               </ul>
-              <Link to="/compare">
-                <Button size="lg" className="bg-white text-slate-900 hover:bg-slate-100">
-                  View Best Offers
-                </Button>
-              </Link>
+              <div>
+                <Link to="/compare">
+                  <Button size="lg" className="bg-white text-slate-900 hover:bg-slate-100 w-full md:w-auto">
+                    View Best Offers
+                  </Button>
+                </Link>
+              </div>
             </div>
-            <div className="md:w-1/2 relative">
+            <div className="md:w-1/2 relative w-full">
               <div className="absolute inset-0 bg-blue-500/20 blur-3xl rounded-full" />
-              <div className="relative bg-slate-800 p-8 rounded-2xl border border-slate-700 shadow-2xl">
+              <div className="relative bg-slate-800 p-6 md:p-8 rounded-2xl border border-slate-700 shadow-2xl">
                 <div className="flex justify-between items-center border-b border-slate-700 pb-4 mb-4">
                   <span className="font-bold text-lg">Monthly Premium Savings</span>
                 </div>
@@ -267,10 +269,10 @@ export const Home = () => {
       </section>
 
       {/* Latest Articles */}
-      <section className="py-24 bg-slate-50">
+      <section className="py-16 md:py-24 bg-slate-50">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="flex justify-between items-end mb-12">
-            <div>
+          <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
+            <div className="text-center md:text-left w-full md:w-auto">
               <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Expert Guides</h2>
               <p className="text-slate-600 text-lg">Read our latest reviews and tips to save on your next policy.</p>
             </div>
@@ -317,14 +319,14 @@ export const Home = () => {
           
           <div className="mt-12 text-center md:hidden">
             <Link to="/blog">
-              <Button variant="outline">View All Articles</Button>
+              <Button variant="outline" className="w-full">View All Articles</Button>
             </Link>
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-blue-600">
+      <section className="py-16 md:py-20 bg-blue-600">
         <div className="container mx-auto px-4 md:px-6 text-center text-white">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to find the perfect plan?</h2>
           <p className="text-blue-100 text-lg max-w-2xl mx-auto mb-8">
