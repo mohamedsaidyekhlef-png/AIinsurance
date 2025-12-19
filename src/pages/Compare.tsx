@@ -3,6 +3,7 @@ import { comparisonData, partners } from '../data/mockData';
 import { motion } from 'framer-motion';
 import { Check, Star, ExternalLink, TrendingUp, Globe, ShieldCheck } from 'lucide-react';
 import { Button } from '../components/ui/Button';
+import { Link } from 'react-router-dom';
 
 export const Compare = () => {
   return (
@@ -85,9 +86,11 @@ export const Compare = () => {
                  </p>
               </div>
               <div className="md:ml-auto">
-                 <Button variant="outline" className="border-teal-400 text-teal-400 hover:bg-teal-400 hover:text-slate-900">
-                    Check Local Rates
-                 </Button>
+                 <Link to="/search">
+                   <Button variant="outline" className="border-teal-400 text-teal-400 hover:bg-teal-400 hover:text-slate-900">
+                      Check Local Rates
+                   </Button>
+                 </Link>
               </div>
            </div>
         </div>

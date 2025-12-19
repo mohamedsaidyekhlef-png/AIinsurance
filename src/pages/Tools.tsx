@@ -1,12 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { FileText, BarChart3, Shield, Activity, Camera, Smartphone, CloudLightning, ArrowRight, Sliders, Zap } from 'lucide-react';
+import { FileText, BarChart3, Shield, Activity, Camera, Smartphone, CloudLightning, ArrowRight, Sliders, Zap, Globe } from 'lucide-react';
 import { RiskPulse } from '../components/tools/RiskPulse';
 import { LiveTicker } from '../components/tools/LiveTicker';
 
 export const Tools = () => {
   const toolsList = [
+    { id: 'market-scanner', name: 'AI Market Scanner', icon: Globe, color: 'text-emerald-500', bg: 'bg-emerald-50', desc: 'Secretly crawl the web for new insurance links.' },
     { id: 'scenario-stress-test', name: 'Scenario Stress Test', icon: Sliders, color: 'text-orange-600', bg: 'bg-orange-50', desc: 'Simulate accidents & storms to see costs.' },
     { id: 'optimization', name: 'Risk Optimizer', icon: Zap, color: 'text-yellow-500', bg: 'bg-yellow-50', desc: 'One-click policy swap proposal.' },
     { id: 'policy-analyzer', name: 'Policy Analyzer', icon: FileText, color: 'text-blue-600', bg: 'bg-blue-50', desc: 'Upload PDF to decode fine print & exclusions.' },

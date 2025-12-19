@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { 
   FileText, BarChart3, Shield, Activity, 
-  Camera, Smartphone, CloudLightning, Menu, X 
+  Camera, Smartphone, CloudLightning, Menu, X, Globe 
 } from 'lucide-react';
 import { cn } from '../../lib/utils';
 
@@ -20,6 +20,7 @@ export const toolsList = [
   { id: 'vault', name: 'Evidence Vault', icon: Camera, color: 'text-indigo-600', bg: 'bg-indigo-50' },
   { id: 'telematics', name: 'Telematics Opt.', icon: Smartphone, color: 'text-emerald-600', bg: 'bg-emerald-50' },
   { id: 'disaster', name: 'Parametric Alert', icon: CloudLightning, color: 'text-amber-600', bg: 'bg-amber-50' },
+  { id: 'scanner', name: 'Market Scanner', icon: Globe, color: 'text-emerald-500', bg: 'bg-emerald-50' },
 ];
 
 export const ToolsLayout: React.FC<ToolsLayoutProps> = ({ children, activeTool, setActiveTool }) => {

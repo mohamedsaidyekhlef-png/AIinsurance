@@ -24,6 +24,7 @@ import { TelematicsOptimizerPage } from './pages/tools/TelematicsOptimizerPage';
 import { DisasterAlertPage } from './pages/tools/DisasterAlertPage';
 import { ScenarioStressTestPage } from './pages/tools/ScenarioStressTestPage';
 import { OneClickOptimizationPage } from './pages/tools/OneClickOptimizationPage';
+import { MarketScannerPage } from './pages/tools/MarketScannerPage';
 
 // Scroll to top on route change
 const ScrollToTop = () => {
@@ -58,6 +59,7 @@ function App() {
             <Route path="/tools/disaster-alert" element={<DisasterAlertPage />} />
             <Route path="/tools/scenario-stress-test" element={<ScenarioStressTestPage />} />
             <Route path="/tools/optimization" element={<OneClickOptimizationPage />} />
+            <Route path="/tools/market-scanner" element={<MarketScannerPage />} />
 
             <Route path="/compare" element={<Compare />} />
             <Route path="/search" element={<SearchProvider />} />
