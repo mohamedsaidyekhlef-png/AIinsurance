@@ -60,7 +60,7 @@ export const Compare = () => {
                   rel="noopener noreferrer"
                   className="w-full"
                 >
-                  <Button className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700">
+                  <Button className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 py-4">
                     View Offer <ExternalLink size={16} />
                   </Button>
                 </a>
@@ -85,9 +85,9 @@ export const Compare = () => {
                     Rates vary significantly by region. Whether you are looking for <strong>insurance quotes Texas</strong>, California, or New York, our AI adjusts to local regulations and risk factors to find you the most competitive <strong>insurance coverage</strong>.
                  </p>
               </div>
-              <div className="md:ml-auto">
+              <div className="md:ml-auto w-full md:w-auto">
                  <Link to="/search">
-                   <Button variant="outline" className="border-teal-400 text-teal-400 hover:bg-teal-400 hover:text-slate-900">
+                   <Button variant="outline" className="w-full md:w-auto border-teal-400 text-teal-400 hover:bg-teal-400 hover:text-slate-900 py-4">
                       Check Local Rates
                    </Button>
                  </Link>
@@ -95,34 +95,39 @@ export const Compare = () => {
            </div>
         </div>
 
-        {/* Comparison Table */}
+        {/* Comparison Table - Scrollable on Mobile */}
         <div className="bg-white rounded-3xl shadow-xl border border-slate-200 overflow-hidden">
           <div className="p-8 border-b border-slate-100 text-center">
              <h2 className="text-2xl font-bold text-slate-900">Why Switch to AI Insurance?</h2>
              <p className="text-slate-500 mt-2">Comparing traditional vs. modern <strong>insurance providers</strong>.</p>
           </div>
-          <div className="grid grid-cols-3 bg-slate-50 text-slate-700 p-4 md:p-6 text-sm md:text-base font-bold border-b border-slate-200">
-            <div>Feature</div>
-            <div className="text-center text-slate-500">Traditional</div>
-            <div className="text-center text-blue-600">AI-First Insurer</div>
-          </div>
           
-          {comparisonData.map((row, idx) => (
-            <motion.div 
-              key={idx}
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ delay: idx * 0.05 }}
-              className={`grid grid-cols-3 p-4 md:p-6 items-center border-b border-slate-100 last:border-0 ${row.winner === 'ai' ? 'bg-blue-50/10' : ''}`}
-            >
-              <div className="font-semibold text-slate-800 text-sm md:text-base">{row.feature}</div>
-              <div className="text-center text-slate-500 text-sm md:text-base">{row.traditional}</div>
-              <div className="text-center font-bold text-blue-700 flex items-center justify-center gap-2 text-sm md:text-base">
-                {row.winner === 'ai' && <Check size={16} className="text-teal-500 hidden md:block" />}
-                {row.ai}
+          <div className="overflow-x-auto">
+            <div className="min-w-[600px]">
+              <div className="grid grid-cols-3 bg-slate-50 text-slate-700 p-4 md:p-6 text-sm md:text-base font-bold border-b border-slate-200">
+                <div>Feature</div>
+                <div className="text-center text-slate-500">Traditional</div>
+                <div className="text-center text-blue-600">AI-First Insurer</div>
               </div>
-            </motion.div>
-          ))}
+              
+              {comparisonData.map((row, idx) => (
+                <motion.div 
+                  key={idx}
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  transition={{ delay: idx * 0.05 }}
+                  className={`grid grid-cols-3 p-4 md:p-6 items-center border-b border-slate-100 last:border-0 ${row.winner === 'ai' ? 'bg-blue-50/10' : ''}`}
+                >
+                  <div className="font-semibold text-slate-800 text-sm md:text-base">{row.feature}</div>
+                  <div className="text-center text-slate-500 text-sm md:text-base">{row.traditional}</div>
+                  <div className="text-center font-bold text-blue-700 flex items-center justify-center gap-2 text-sm md:text-base">
+                    {row.winner === 'ai' && <Check size={16} className="text-teal-500 hidden md:block" />}
+                    {row.ai}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>

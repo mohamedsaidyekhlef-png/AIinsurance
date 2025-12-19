@@ -10,7 +10,7 @@ export const Footer = () => {
           <div className="space-y-4">
             <div className="flex items-center gap-3 text-white">
               <img 
-                src="https://i.postimg.cc/xTwWz4ck/Gemini-Generated-Image-fnp6q5fnp6q5fnp6-(1).png" 
+                src="https://i.postimg.cc/DzfwxQLp/Chat-GPT-Image-Dec-19-2025-07-38-38-PM.png" 
                 alt="Insuralix Logo" 
                 className="h-24 w-24 object-contain drop-shadow-lg"
               />

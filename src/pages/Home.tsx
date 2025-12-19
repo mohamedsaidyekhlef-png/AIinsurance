@@ -33,9 +33,9 @@ export const Home = () => {
   return (
     <div className="w-full overflow-hidden">
       {/* Hero Section */}
-      <section className="relative pt-28 pb-16 md:pt-40 md:pb-24 lg:pt-48 lg:pb-32 overflow-hidden bg-slate-50">
-        <div className="absolute top-0 right-0 -translate-y-1/4 translate-x-1/4 w-[400px] md:w-[800px] h-[400px] md:h-[800px] bg-blue-100/50 rounded-full blur-3xl opacity-50 pointer-events-none" />
-        <div className="absolute bottom-0 left-0 translate-y-1/4 -translate-x-1/4 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-teal-100/50 rounded-full blur-3xl opacity-50 pointer-events-none" />
+      <section className="relative pt-32 pb-16 md:pt-48 md:pb-32 overflow-hidden bg-slate-50">
+        <div className="absolute top-0 right-0 -translate-y-1/4 translate-x-1/4 w-[300px] md:w-[800px] h-[300px] md:h-[800px] bg-blue-100/50 rounded-full blur-3xl opacity-50 pointer-events-none" />
+        <div className="absolute bottom-0 left-0 translate-y-1/4 -translate-x-1/4 w-[250px] md:w-[600px] h-[250px] md:h-[600px] bg-teal-100/50 rounded-full blur-3xl opacity-50 pointer-events-none" />
         
         <div className="container mx-auto px-4 md:px-6 relative z-10">
           <div className="max-w-5xl mx-auto text-center">
@@ -48,8 +48,8 @@ export const Home = () => {
                 Global Insurance Marketplace
               </span>
               
-              {/* Animated Headings - Responsive Height & Font Size */}
-              <div className="h-[140px] sm:h-[160px] md:h-[180px] relative flex items-center justify-center mb-4 md:mb-6">
+              {/* Animated Headings - Optimized height for mobile to prevent overlap */}
+              <div className="h-[160px] sm:h-[180px] md:h-[200px] relative flex items-center justify-center mb-4 md:mb-6">
                 <AnimatePresence mode="wait">
                   <motion.h1
                     key={headingIndex}
@@ -68,14 +68,14 @@ export const Home = () => {
                 We analyze hundreds of insurance providers to find you the best coverage. Whether you need to understand your insurance policy or find e insurance solutions, we have the tools.
               </p>
 
-              {/* AI Search Bar */}
+              {/* AI Search Bar - Mobile Optimized */}
               <form onSubmit={handleSearch} className="max-w-xl mx-auto mb-10 md:mb-12 relative px-2">
                 <div className="relative flex items-center">
                   <Search className="absolute left-4 text-slate-400" size={20} />
                   <input 
                     type="text" 
                     placeholder="Search providers in your city..." 
-                    className="w-full pl-12 pr-20 md:pr-4 py-3 md:py-4 rounded-full border border-slate-200 shadow-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-base md:text-lg"
+                    className="w-full pl-12 pr-20 md:pr-24 py-3 md:py-4 rounded-full border border-slate-200 shadow-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-base md:text-lg appearance-none"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                   />
@@ -85,13 +85,13 @@ export const Home = () => {
                 </div>
               </form>
 
-              {/* Trust Bar */}
+              {/* Trust Bar - Flex Wrap for Mobile */}
               <div className="flex flex-col items-center gap-4">
                 <p className="text-xs md:text-sm text-slate-500 font-medium uppercase tracking-widest">Compare Top Providers</p>
-                <div className="flex flex-wrap justify-center gap-6 md:gap-12 opacity-70 grayscale hover:grayscale-0 transition-all duration-500 px-4">
+                <div className="flex flex-wrap justify-center gap-x-6 gap-y-4 md:gap-12 opacity-70 grayscale hover:grayscale-0 transition-all duration-500 px-4">
                   {partners.slice(0, 5).map((p, i) => (
-                    <div key={i} className="flex items-center gap-2 text-lg md:text-xl font-bold text-slate-700">
-                      <span className="text-2xl">{p.logo}</span> <span className="hidden sm:inline">{p.name}</span>
+                    <div key={i} className="flex items-center gap-2 text-base md:text-xl font-bold text-slate-700">
+                      <span className="text-xl md:text-2xl">{p.logo}</span> <span className="hidden sm:inline">{p.name}</span>
                     </div>
                   ))}
                 </div>
@@ -111,8 +111,8 @@ export const Home = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             <Link to="/tools/policy-analyzer" className="group">
-              <div className="p-8 rounded-2xl bg-slate-50 border border-slate-100 hover:shadow-xl transition-all duration-300 h-full">
-                <div className="w-14 h-14 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+              <div className="p-8 rounded-3xl bg-slate-50 border border-slate-100 hover:shadow-xl transition-all duration-300 h-full">
+                <div className="w-14 h-14 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                   <FileText size={28} />
                 </div>
                 <h3 className="text-xl font-bold text-slate-900 mb-3">Policy Analyzer</h3>
@@ -122,8 +122,8 @@ export const Home = () => {
             </Link>
 
             <Link to="/tools/premium-predictor" className="group">
-              <div className="p-8 rounded-2xl bg-slate-50 border border-slate-100 hover:shadow-xl transition-all duration-300 h-full">
-                <div className="w-14 h-14 bg-teal-100 text-teal-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+              <div className="p-8 rounded-3xl bg-slate-50 border border-slate-100 hover:shadow-xl transition-all duration-300 h-full">
+                <div className="w-14 h-14 bg-teal-100 text-teal-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                   <BarChart3 size={28} />
                 </div>
                 <h3 className="text-xl font-bold text-slate-900 mb-3">Premium Predictor</h3>
@@ -133,8 +133,8 @@ export const Home = () => {
             </Link>
 
             <Link to="/tools/gap-finder" className="group">
-              <div className="p-8 rounded-2xl bg-slate-50 border border-slate-100 hover:shadow-xl transition-all duration-300 h-full">
-                <div className="w-14 h-14 bg-rose-100 text-rose-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+              <div className="p-8 rounded-3xl bg-slate-50 border border-slate-100 hover:shadow-xl transition-all duration-300 h-full">
+                <div className="w-14 h-14 bg-rose-100 text-rose-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                   <Shield size={28} />
                 </div>
                 <h3 className="text-xl font-bold text-slate-900 mb-3">Coverage Gap Finder</h3>
@@ -319,7 +319,7 @@ export const Home = () => {
           
           <div className="mt-12 text-center md:hidden">
             <Link to="/blog">
-              <Button variant="outline" className="w-full">View All Articles</Button>
+              <Button variant="outline" className="w-full py-4">View All Articles</Button>
             </Link>
           </div>
         </div>
@@ -334,12 +334,12 @@ export const Home = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/compare">
-              <Button variant="secondary" size="lg" className="bg-white text-blue-600 hover:bg-blue-50 shadow-none w-full sm:w-auto">
+              <Button variant="secondary" size="lg" className="bg-white text-blue-600 hover:bg-blue-50 shadow-none w-full sm:w-auto py-4">
                 Compare Rates
               </Button>
             </Link>
             <Link to="/search">
-              <Button variant="outline" size="lg" className="border-blue-400 text-white hover:bg-blue-700 hover:border-blue-700 w-full sm:w-auto">
+              <Button variant="outline" size="lg" className="border-blue-400 text-white hover:bg-blue-700 hover:border-blue-700 w-full sm:w-auto py-4">
                 Find Local Agent
               </Button>
             </Link>

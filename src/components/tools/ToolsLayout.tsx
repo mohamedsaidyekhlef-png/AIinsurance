@@ -28,21 +28,39 @@ export const ToolsLayout: React.FC<ToolsLayoutProps> = ({ children, activeTool, 
 
   return (
     <div className="flex flex-col lg:flex-row min-h-[800px] bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden">
-      {/* Mobile Header */}
-      <div className="lg:hidden p-4 border-b border-slate-100 flex items-center justify-between bg-slate-50">
-        <span className="font-bold text-slate-700">Select Tool</span>
-        <button onClick={() => setIsSidebarOpen(!isSidebarOpen)} className="p-2 bg-white rounded-lg shadow-sm">
-          {isSidebarOpen ? <X size={20} /> : <Menu size={20} />}
+      {/* Mobile Header / Tool Switcher */}
+      <div className="lg:hidden p-4 border-b border-slate-100 flex items-center justify-between bg-slate-50 sticky top-0 z-20">
+        <span className="font-bold text-slate-700 flex items-center gap-2">
+           <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+           Active Tool
+        </span>
+        <button 
+           onClick={() => setIsSidebarOpen(!isSidebarOpen)} 
+           className="flex items-center gap-2 px-4 py-2 bg-white rounded-xl shadow-sm border border-slate-200 text-sm font-bold text-slate-600"
+        >
+          {isSidebarOpen ? <X size={18} /> : <Menu size={18} />}
+          Switch Tool
         </button>
       </div>
 
+      {/* Sidebar Overlay for Mobile */}
+      <div className={cn(
+        "fixed inset-0 bg-black/50 z-30 lg:hidden transition-opacity",
+        isSidebarOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+      )} onClick={() => setIsSidebarOpen(false)} />
+
       {/* Sidebar */}
       <div className={cn(
-        "w-full lg:w-72 bg-slate-50 border-r border-slate-100 flex-shrink-0 transition-all duration-300 ease-in-out lg:block",
-        isSidebarOpen ? "block" : "hidden"
+        "fixed lg:static inset-y-0 left-0 w-72 bg-slate-50 border-r border-slate-100 flex-shrink-0 transition-transform duration-300 ease-in-out z-40 lg:transform-none lg:block",
+        isSidebarOpen ? "translate-x-0" : "-translate-x-full"
       )}>
-        <div className="p-6">
-          <h2 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">AI Toolkit</h2>
+        <div className="p-6 h-full flex flex-col overflow-y-auto">
+          <div className="flex items-center justify-between mb-6 lg:hidden">
+             <h2 className="text-lg font-bold text-slate-900">Select Tool</h2>
+             <button onClick={() => setIsSidebarOpen(false)} className="p-2 bg-white rounded-full shadow-sm"><X size={20} /></button>
+          </div>
+
+          <h2 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 hidden lg:block">AI Toolkit</h2>
           <div className="space-y-2">
             {toolsList.map((tool) => (
               <button
@@ -62,26 +80,26 @@ export const ToolsLayout: React.FC<ToolsLayoutProps> = ({ children, activeTool, 
               </button>
             ))}
           </div>
-        </div>
         
-        <div className="p-6 mt-auto border-t border-slate-200">
-           <div className="bg-slate-900 rounded-xl p-4 text-white relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-20 h-20 bg-blue-500/20 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
-              <h3 className="font-bold text-sm mb-1">Dualite AI Core</h3>
-              <p className="text-xs text-slate-400">System Operational</p>
-              <div className="flex gap-1 mt-3">
-                 <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-                 <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse delay-75" />
-                 <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse delay-150" />
-              </div>
-           </div>
+          <div className="mt-auto pt-6 border-t border-slate-200">
+             <div className="bg-slate-900 rounded-xl p-4 text-white relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-20 h-20 bg-blue-500/20 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
+                <h3 className="font-bold text-sm mb-1">Dualite AI Core</h3>
+                <p className="text-xs text-slate-400">System Operational</p>
+                <div className="flex gap-1 mt-3">
+                   <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+                   <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse delay-75" />
+                   <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse delay-150" />
+                </div>
+             </div>
+          </div>
         </div>
       </div>
 
       {/* Main Content */}
       <div className="flex-grow bg-white relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-teal-400 to-purple-500 opacity-20" />
-        <div className="h-full overflow-y-auto p-6 md:p-10">
+        <div className="h-full overflow-y-auto p-4 md:p-10">
           {children}
         </div>
       </div>

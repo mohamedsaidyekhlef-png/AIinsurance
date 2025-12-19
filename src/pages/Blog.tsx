@@ -91,7 +91,7 @@ export const Blog = () => {
                 </div>
                 <div className="p-8 md:p-12 lg:p-16 flex flex-col justify-center relative">
                   <div className="absolute top-0 right-0 p-8 opacity-5 pointer-events-none">
-                    <img src="https://i.postimg.cc/xTwWz4ck/Gemini-Generated-Image-fnp6q5fnp6q5fnp6-(1).png" className="w-40 h-40 grayscale" alt="watermark" />
+                    <img src="https://i.postimg.cc/DzfwxQLp/Chat-GPT-Image-Dec-19-2025-07-38-38-PM.png" className="w-40 h-40 grayscale" alt="watermark" />
                   </div>
                   
                   <div className="flex items-center gap-3 mb-6">
