@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { CheckCircle2, Globe, Users, Zap, Briefcase, HeartHandshake } from 'lucide-react';
+import { CheckCircle2, Globe, Users, Zap, Briefcase, Mail } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 
 export const About = () => {
@@ -89,7 +89,7 @@ export const About = () => {
         </div>
 
         {/* Careers / Jobs Section */}
-        <div className="max-w-4xl mx-auto text-center">
+        <div className="max-w-4xl mx-auto text-center mb-20">
            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-bold uppercase tracking-wider mb-6">
               <Briefcase size={14} /> Careers
            </div>
@@ -100,6 +100,19 @@ export const About = () => {
            <Button variant="outline" className="border-slate-300 hover:border-blue-600 hover:text-blue-600">
               View Open Positions
            </Button>
+        </div>
+
+        {/* Contact Section */}
+        <div className="max-w-3xl mx-auto text-center border-t border-slate-200 pt-16">
+           <h2 className="text-2xl font-bold text-slate-900 mb-4">Get in Touch</h2>
+           <p className="text-slate-600 mb-8">
+              Whether you're a carrier looking to partner, an affiliate, or a user with feedback, we'd love to hear from you.
+           </p>
+           <a href="mailto:contact@insuralix.com">
+              <Button className="bg-slate-900 text-white hover:bg-slate-800 px-8 py-4 text-lg shadow-xl shadow-slate-900/20">
+                 <Mail className="mr-2" size={20} /> Email Us: contact@insuralix.com
+              </Button>
+           </a>
         </div>
 
       </div>

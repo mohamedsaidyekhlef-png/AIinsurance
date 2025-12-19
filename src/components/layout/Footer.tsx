@@ -1,5 +1,5 @@
 import React from 'react';
-import { Twitter, Linkedin, Facebook, Instagram } from 'lucide-react';
+import { Twitter, Linkedin, Facebook, Instagram, Mail } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export const Footer = () => {
@@ -19,6 +19,9 @@ export const Footer = () => {
             <p className="text-sm text-slate-400 leading-relaxed">
               Revolutionizing the insurance industry through artificial intelligence, predictive analytics, and data-driven insights.
             </p>
+            <a href="mailto:contact@insuralix.com" className="inline-flex items-center gap-2 text-sm text-blue-400 hover:text-blue-300 transition-colors">
+              <Mail size={16} /> contact@insuralix.com
+            </a>
           </div>
           
           <div>
@@ -35,6 +38,7 @@ export const Footer = () => {
             <h4 className="text-white font-semibold mb-4">Company</h4>
             <ul className="space-y-2 text-sm">
               <li><Link to="/about" className="hover:text-blue-400 transition-colors">About Us</Link></li>
+              <li><a href="mailto:contact@insuralix.com" className="hover:text-blue-400 transition-colors">Contact Support</a></li>
               <li><Link to="/privacy" className="hover:text-blue-400 transition-colors">Privacy Policy</Link></li>
               <li><Link to="/terms" className="hover:text-blue-400 transition-colors">Terms of Service</Link></li>
               <li><Link to="/disclaimer" className="hover:text-blue-400 transition-colors">Disclaimer</Link></li>
@@ -48,7 +52,7 @@ export const Footer = () => {
               <input 
                 type="email" 
                 placeholder="Email address" 
-                className="bg-slate-800 border-none rounded-lg px-4 py-2 text-sm w-full focus:ring-2 focus:ring-blue-500 outline-none"
+                className="bg-slate-800 border-none rounded-lg px-4 py-2 text-sm w-full focus:ring-2 focus:ring-blue-500 outline-none text-white"
               />
               <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
                 Join
