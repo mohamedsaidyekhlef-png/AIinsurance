@@ -51,45 +51,46 @@ export const niches = [
   }
 ];
 
+// UPDATED: Synced with src/data/blogContent.tsx and new images
 export const blogPosts = [
   {
     id: 1,
-    title: "Is AI Insurance Safe? The Truth Behind the Algorithms",
-    excerpt: "Addressing the trust barrier: How AI removes bias and ensures faster, fairer payouts compared to human adjusters.",
+    title: "The Ultimate Guide to AI Insurance: Definitions, Risks, and the Future",
+    excerpt: "We decode the complex world of 'InsurTech'. Learn the true premium definition, understand risk, and see why algorithms are replacing actuaries.",
     category: "Consumer Guide",
-    date: "Oct 24, 2025",
-    readTime: "6 min read",
-    image: "https://images.unsplash.com/photo-1507146153580-69a1fe6d8aa1?auto=format&fit=crop&q=80&w=800",
+    date: "Dec 14, 2025",
+    readTime: "12 min read",
+    image: "https://i.postimg.cc/kGjBNdQY/hands_working_digital_device_network_graphic_overlay.jpg",
     author: "Sarah Jenks"
   },
   {
     id: 2,
-    title: "Lemonade vs. Geico: The Ultimate 2025 Showdown",
-    excerpt: "We pit the AI-native giant against the traditional heavyweight to see who offers better rates and claims experiences.",
+    title: "Top 10 Insurance Providers of 2025: Traditional vs. Online Insurance",
+    excerpt: "A data-driven ranking of the best insurance companies. We compare legacy giants against the new wave of 'E-Insurance' startups.",
     category: "Reviews",
-    date: "Oct 20, 2025",
-    readTime: "8 min read",
-    image: "https://images.unsplash.com/photo-1556742049-0cfed4f7a07d?auto=format&fit=crop&q=80&w=800",
+    date: "Dec 12, 2025",
+    readTime: "15 min read",
+    image: "https://i.postimg.cc/fb4kfCdQ/standard_quality_control_collage_concept.jpg",
     author: "Mike Ross"
   },
   {
     id: 3,
-    title: "5 Ways AI Tools Can Lower Your Premiums Today",
-    excerpt: "From telematics apps to smart home sensors, here are actionable ways to use tech to save money.",
+    title: "Understanding Your Policy: From Loss Definitions to Claims",
+    excerpt: "Don't let the fine print cost you thousands. We explain 'Incurred Meaning', 'Loss Definition', and how to read your declarations page.",
     category: "Tips & Tricks",
-    date: "Oct 15, 2025",
-    readTime: "5 min read",
-    image: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&q=80&w=800",
+    date: "Dec 10, 2025",
+    readTime: "10 min read",
+    image: "https://i.postimg.cc/R0f6kymq/car_insurance_coverage_accident_benefits.jpg",
     author: "Dr. Emily Chen"
   },
   {
     id: 4,
-    title: "How AI Fraud Detection Affects Your Wallet",
-    excerpt: "Neural networks are catching complex fraud, which means lower premiums for honest policyholders.",
+    title: "Niche Guides: Life, Renters, and Auto Insurance in the AI Era",
+    excerpt: "From 'Life Insurance Types' to 'Renters Insurance Definitions', we break down the specific coverages you need for your lifestyle.",
     category: "Industry News",
-    date: "Oct 10, 2025",
-    readTime: "7 min read",
-    image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=800",
+    date: "Dec 08, 2025",
+    readTime: "14 min read",
+    image: "https://i.postimg.cc/YCRy1nZm/smart-car-security-unlock-via-smartphone-digital-remix.jpg",
     author: "Alex V."
   }
 ];
