@@ -2,20 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Globe, Search, Database, Shield, Wifi, Terminal, Plus, ExternalLink, Loader2, Server, Lock } from 'lucide-react';
 import { Button } from '../ui/Button';
-
-// Mock data for the simulation to "discover"
-const DISCOVERY_POOL = [
-  { name: "Nebula Cover", type: "Space/Satellite", region: "Global", rating: 4.8, url: "https://nebula-cover.example.com" },
-  { name: "Oasis Flood", type: "Parametric", region: "Florida, USA", rating: 4.5, url: "https://oasis-flood.example.com" },
-  { name: "CyberWall", type: "Cyber Security", region: "Europe", rating: 4.9, url: "https://cyberwall.example.com" },
-  { name: "PetPulse", type: "Pet Health", region: "UK", rating: 4.2, url: "https://petpulse.example.com" },
-  { name: "DroneGuard", type: "Commercial Drone", region: "Asia", rating: 4.6, url: "https://droneguard.example.com" },
-  { name: "GigProtect", type: "Freelancer Liability", region: "USA", rating: 4.4, url: "https://gigprotect.example.com" },
-  { name: "CryptoShield", type: "Digital Asset", region: "Global", rating: 4.7, url: "https://cryptoshield.example.com" },
-  { name: "BioLife", type: "Health Tech", region: "Canada", rating: 4.3, url: "https://biolife.example.com" },
-  { name: "AgriSure", type: "Crop Parametric", region: "Australia", rating: 4.5, url: "https://agrisure.example.com" },
-  { name: "NanoInsure", type: "Micro-Policies", region: "India", rating: 4.1, url: "https://nanoinsure.example.com" }
-];
+import { generateMarketData } from '../../lib/gemini';
 
 const LOG_MESSAGES = [
   "Initializing crawler bot v4.2...",
@@ -36,8 +23,9 @@ const LOG_MESSAGES = [
 export const MarketScanner = () => {
   const [active, setActive] = useState(false);
   const [logs, setLogs] = useState<string[]>([]);
-  const [discovered, setDiscovered] = useState<typeof DISCOVERY_POOL>([]);
+  const [discovered, setDiscovered] = useState<any[]>([]);
   const [scannedCount, setScannedCount] = useState(1402);
+  const [searchQuery, setSearchQuery] = useState("AI Insurance");
   const logsEndRef = useRef<HTMLDivElement>(null);
 
   // Auto-scroll logs
@@ -58,23 +46,31 @@ export const MarketScanner = () => {
       setScannedCount(prev => prev + Math.floor(Math.random() * 5));
     }, 800);
 
-    const discoveryInterval = setInterval(() => {
-      if (Math.random() > 0.7) { // 30% chance to find something
-        const newItem = DISCOVERY_POOL[Math.floor(Math.random() * DISCOVERY_POOL.length)];
-        // Only add if not already in list (simple check for demo)
-        setDiscovered(prev => {
-           if (prev.find(i => i.name === newItem.name)) return prev;
-           return [newItem, ...prev];
-        });
-        setLogs(prev => [...prev, `[SUCCESS] >>> ENTITY IDENTIFIED: ${newItem.name}`]);
+    // Gemini Discovery Interval
+    const discoveryInterval = setInterval(async () => {
+      if (Math.random() > 0.7) { // 30% chance to fetch real data
+        try {
+          const newData = await generateMarketData(searchQuery);
+          if (newData && newData.length > 0) {
+             const item = newData[Math.floor(Math.random() * newData.length)];
+             setDiscovered(prev => {
+                // Avoid duplicates
+                if (prev.find(i => i.name === item.name)) return prev;
+                return [item, ...prev];
+             });
+             setLogs(prev => [...prev, `[SUCCESS] >>> GEMINI AI IDENTIFIED: ${item.name}`]);
+          }
+        } catch (e) {
+          console.error("Discovery error", e);
+        }
       }
-    }, 2500);
+    }, 4000);
 
     return () => {
       clearInterval(logInterval);
       clearInterval(discoveryInterval);
     };
-  }, [active]);
+  }, [active, searchQuery]);
 
   return (
     <div className="max-w-6xl mx-auto">
@@ -83,7 +79,7 @@ export const MarketScanner = () => {
           <Globe className="text-emerald-500" /> AI Market Scanner
         </h2>
         <p className="text-slate-500 mt-2">
-          An autonomous agent that crawls the web 24/7 to find new insurance companies, data leaks, and arbitrage opportunities.
+          An autonomous agent powered by Gemini that crawls the web 24/7 to find new insurance companies and arbitrage opportunities.
         </p>
       </div>
 
@@ -101,6 +97,17 @@ export const MarketScanner = () => {
                  <Wifi size={16} className="text-slate-500" />
               </div>
 
+              <div className="mb-6">
+                <label className="text-xs text-slate-400 uppercase font-bold">Target Niche</label>
+                <input 
+                  type="text" 
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-white text-sm mt-1 focus:ring-2 focus:ring-emerald-500 outline-none"
+                  placeholder="e.g. Cyber Insurance"
+                />
+              </div>
+
               <div className="text-center mb-8">
                  <div className="text-4xl font-bold font-mono mb-1">{scannedCount.toLocaleString()}</div>
                  <div className="text-xs text-slate-400 uppercase tracking-widest">URLs Scanned</div>
@@ -113,26 +120,6 @@ export const MarketScanner = () => {
                 {active ? 'Terminate Agent' : 'Deploy Agent'}
               </Button>
            </div>
-
-           <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm">
-              <h3 className="font-bold text-slate-900 mb-4 flex items-center gap-2">
-                 <Server size={18} className="text-blue-500" /> Network Status
-              </h3>
-              <div className="space-y-4">
-                 <div className="flex justify-between text-sm">
-                    <span className="text-slate-500">Proxy Nodes</span>
-                    <span className="font-mono font-bold text-slate-700">12/12 Active</span>
-                 </div>
-                 <div className="flex justify-between text-sm">
-                    <span className="text-slate-500">Bandwidth</span>
-                    <span className="font-mono font-bold text-slate-700">{active ? '1.2 GB/s' : '0 KB/s'}</span>
-                 </div>
-                 <div className="flex justify-between text-sm">
-                    <span className="text-slate-500">Encryption</span>
-                    <span className="font-mono font-bold text-green-600 flex items-center gap-1"><Lock size={12} /> AES-256</span>
-                 </div>
-              </div>
-           </div>
         </div>
 
         {/* Middle Column: Terminal Log */}
@@ -140,7 +127,7 @@ export const MarketScanner = () => {
            <div className="bg-black rounded-3xl p-6 font-mono text-xs md:text-sm text-green-400 h-[300px] overflow-hidden flex flex-col shadow-2xl border border-slate-800 relative">
               <div className="absolute top-4 right-4 text-slate-600"><Terminal size={20} /></div>
               <div className="flex-grow overflow-y-auto space-y-2 scrollbar-hide">
-                 <div className="opacity-50">root@insuralix-agent:~$ ./init_crawler.sh</div>
+                 <div className="opacity-50">root@insuralix-agent:~$ ./init_gemini_crawler.sh</div>
                  {logs.map((log, i) => (
                     <motion.div 
                       key={i} 
@@ -152,13 +139,6 @@ export const MarketScanner = () => {
                     </motion.div>
                  ))}
                  <div ref={logsEndRef} />
-                 {active && (
-                    <motion.div 
-                      animate={{ opacity: [0, 1, 0] }} 
-                      transition={{ repeat: Infinity, duration: 0.8 }}
-                      className="w-2 h-4 bg-green-400 inline-block align-middle"
-                    />
-                 )}
               </div>
            </div>
 
@@ -207,9 +187,11 @@ export const MarketScanner = () => {
                                 <div className="text-xs text-slate-400">Trust Score</div>
                                 <div className="font-bold text-green-600">{item.rating}/5.0</div>
                              </div>
-                             <Button size="sm" variant="outline" className="h-9 w-9 p-0 rounded-full border-slate-200">
-                                <Plus size={16} />
-                             </Button>
+                             <a href={item.url} target="_blank" rel="noopener noreferrer">
+                               <Button size="sm" variant="outline" className="h-9 w-9 p-0 rounded-full border-slate-200">
+                                  <ExternalLink size={16} />
+                               </Button>
+                             </a>
                           </div>
                        </motion.div>
                     ))}

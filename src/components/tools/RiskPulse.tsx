@@ -7,7 +7,9 @@ export const RiskPulse = () => {
   
   useEffect(() => {
     // Animate score on mount
-    const timer = setTimeout(() => setScore(82), 500);
+    const timer = setTimeout(() => {
+      setScore(82);
+    }, 500);
     return () => clearTimeout(timer);
   }, []);
 

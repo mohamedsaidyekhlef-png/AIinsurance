@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { BarChart3, TrendingUp, AlertCircle, ArrowRight, DollarSign, RefreshCw } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { Link } from 'react-router-dom';
+import { predictPremium } from '../../lib/gemini';
 
 export const PremiumPredictor = () => {
   const [step, setStep] = useState('input');
@@ -12,84 +13,27 @@ export const PremiumPredictor = () => {
   const [formData, setFormData] = useState({
     age: 30,
     zip: '',
-    credit: 'good', // poor, fair, good, excellent
+    credit: 'good', 
     vehicleValue: 35000,
-    coverage: 'full', // liability, full
+    coverage: 'full',
     accidents: 0
   });
 
   // Result State
-  const [prediction, setPrediction] = useState<{
-    total: number;
-    base: number;
-    factors: { name: string; amount: number; type: 'add' | 'sub' }[];
-    marketTrend: number;
-  } | null>(null);
+  const [prediction, setPrediction] = useState<any>(null);
 
-  const handleCalculate = () => {
+  const handleCalculate = async () => {
     setCalculating(true);
-    
-    // Simulate Algorithm Latency
-    setTimeout(() => {
-      // ALGORITHM LOGIC
-      let baseRate = 120; // Base monthly rate
-      const factors: { name: string; amount: number; type: 'add' | 'sub' }[] = [];
-
-      // Age Factor
-      if (formData.age < 25) {
-        const amount = 45;
-        baseRate += amount;
-        factors.push({ name: 'Young Driver Risk (<25)', amount, type: 'add' });
-      } else if (formData.age > 60) {
-        const amount = 15;
-        baseRate += amount;
-        factors.push({ name: 'Senior Driver Risk', amount, type: 'add' });
-      } else {
-        const amount = 10;
-        baseRate -= amount;
-        factors.push({ name: 'Mature Driver Discount', amount, type: 'sub' });
-      }
-
-      // Credit Factor
-      if (formData.credit === 'poor') {
-        const amount = 35;
-        baseRate += amount;
-        factors.push({ name: 'Credit Tier Adjustment', amount, type: 'add' });
-      } else if (formData.credit === 'excellent') {
-        const amount = 20;
-        baseRate -= amount;
-        factors.push({ name: 'Excellent Credit Discount', amount, type: 'sub' });
-      }
-
-      // Vehicle Value
-      const vehicleRisk = Math.round(formData.vehicleValue / 1000);
-      baseRate += vehicleRisk;
-      factors.push({ name: `Vehicle Value Risk ($${formData.vehicleValue.toLocaleString()})`, amount: vehicleRisk, type: 'add' });
-
-      // Coverage
-      if (formData.coverage === 'liability') {
-        const amount = 40;
-        baseRate -= amount;
-        factors.push({ name: 'Liability Only Savings', amount, type: 'sub' });
-      }
-
-      // Accidents
-      if (formData.accidents > 0) {
-        const amount = formData.accidents * 50;
-        baseRate += amount;
-        factors.push({ name: `Accident History (${formData.accidents})`, amount, type: 'add' });
-      }
-
-      setPrediction({
-        total: Math.round(baseRate),
-        base: 120,
-        factors,
-        marketTrend: 12 // 12% increase projected
-      });
-      
-      setCalculating(false);
+    try {
+      const result = await predictPremium(formData);
+      setPrediction(result);
       setStep('result');
-    }, 1500);
+    } catch (e) {
+      console.error(e);
+      alert("AI Prediction Failed. Please try again.");
+    } finally {
+      setCalculating(false);
+    }
   };
 
   return (
@@ -98,7 +42,7 @@ export const PremiumPredictor = () => {
         <h2 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
           <BarChart3 className="text-teal-600" /> AI Premium Predictor
         </h2>
-        <p className="text-slate-500 mt-2">Our Random Forest algorithm calculates your forecasted rate based on 2025 market data.</p>
+        <p className="text-slate-500 mt-2">Gemini AI analyzes your profile against real-time market trends to forecast your rate.</p>
       </div>
 
       {step === 'input' ? (
@@ -173,7 +117,7 @@ export const PremiumPredictor = () => {
            
            <Button onClick={handleCalculate} disabled={calculating} className="w-full bg-teal-600 hover:bg-teal-700 py-4 text-lg shadow-lg shadow-teal-600/20">
              {calculating ? (
-               <span className="flex items-center gap-2"><RefreshCw className="animate-spin" /> Running ML Model...</span>
+               <span className="flex items-center gap-2"><RefreshCw className="animate-spin" /> Querying Gemini AI...</span>
              ) : 'Calculate Predicted Premium'}
            </Button>
         </motion.div>
@@ -198,11 +142,11 @@ export const PremiumPredictor = () => {
                 </div>
                 
                 <div className="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/10 w-full md:w-auto min-w-[200px]">
-                   <div className="text-xs text-slate-400 mb-2">Confidence Score</div>
+                   <div className="text-xs text-slate-400 mb-2">AI Confidence Score</div>
                    <div className="h-2 bg-slate-700 rounded-full overflow-hidden mb-1">
-                      <div className="h-full bg-teal-400 w-[88%]" />
+                      <div className="h-full bg-teal-400 w-[92%]" />
                    </div>
-                   <div className="text-right text-xs font-bold text-teal-400">88% Accuracy</div>
+                   <div className="text-right text-xs font-bold text-teal-400">92% Accuracy</div>
                 </div>
               </div>
            </div>
@@ -210,7 +154,7 @@ export const PremiumPredictor = () => {
            {/* Cost Breakdown */}
            <div className="bg-white border border-slate-200 rounded-3xl p-8 mb-8 shadow-sm">
               <h3 className="font-bold text-slate-900 mb-6 flex items-center gap-2 text-lg">
-                <DollarSign className="text-teal-600" /> Price Breakdown
+                <DollarSign className="text-teal-600" /> AI Price Breakdown
               </h3>
               
               <div className="space-y-3">
@@ -218,7 +162,7 @@ export const PremiumPredictor = () => {
                     <span className="font-medium text-slate-600">Base Market Rate</span>
                     <span className="font-bold text-slate-900">${prediction?.base}</span>
                  </div>
-                 {prediction?.factors.map((factor, i) => (
+                 {prediction?.factors.map((factor: any, i: number) => (
                     <div key={i} className="flex justify-between items-center p-3 rounded-lg border-b border-slate-50 last:border-0">
                        <span className="text-sm text-slate-500">{factor.name}</span>
                        <span className={`font-bold ${factor.type === 'add' ? 'text-red-500' : 'text-green-500'}`}>

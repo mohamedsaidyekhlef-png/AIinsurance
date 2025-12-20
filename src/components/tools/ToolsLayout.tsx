@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { 
   FileText, BarChart3, Shield, Activity, 
-  Camera, Smartphone, CloudLightning, Menu, X, Globe 
+  Camera, Smartphone, CloudLightning, Menu, X, Globe, Database 
 } from 'lucide-react';
 import { cn } from '../../lib/utils';
 
@@ -13,6 +13,7 @@ interface ToolsLayoutProps {
 }
 
 export const toolsList = [
+  { id: 'global-risk-engine', name: 'Global Risk Engine', icon: Database, color: 'text-blue-600', bg: 'bg-blue-50' },
   { id: 'analyzer', name: 'Policy Analyzer', icon: FileText, color: 'text-blue-600', bg: 'bg-blue-50' },
   { id: 'predictor', name: 'Premium Predictor', icon: BarChart3, color: 'text-teal-600', bg: 'bg-teal-50' },
   { id: 'gap', name: 'Gap Finder', icon: Shield, color: 'text-rose-600', bg: 'bg-rose-50' },

@@ -1,12 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { FileText, BarChart3, Shield, Activity, Camera, Smartphone, CloudLightning, ArrowRight, Sliders, Zap, Globe } from 'lucide-react';
+import { FileText, BarChart3, Shield, Activity, Camera, Smartphone, CloudLightning, ArrowRight, Sliders, Zap, Globe, Satellite, FileSearch, Heart, Database } from 'lucide-react';
 import { RiskPulse } from '../components/tools/RiskPulse';
 import { LiveTicker } from '../components/tools/LiveTicker';
 
 export const Tools = () => {
   const toolsList = [
+    { id: 'global-risk-engine', name: 'Global Risk Engine', icon: Database, color: 'text-blue-600', bg: 'bg-blue-50', desc: 'PSEO Command Center. Generate 30,000+ local pages.' },
+    { id: 'satellite-guardian', name: 'Satellite Guardian', icon: Satellite, color: 'text-sky-600', bg: 'bg-sky-50', desc: 'Property health check via satellite analysis.' },
+    { id: 'fine-print-detective', name: 'Fine-Print Detective', icon: FileSearch, color: 'text-indigo-600', bg: 'bg-indigo-50', desc: 'Agentic policy review & negotiation.' },
+    { id: 'legacy-heartbeat', name: 'Legacy Heartbeat', icon: Heart, color: 'text-rose-500', bg: 'bg-rose-50', desc: 'AI inheritance & estate planner.' },
     { id: 'market-scanner', name: 'AI Market Scanner', icon: Globe, color: 'text-emerald-500', bg: 'bg-emerald-50', desc: 'Secretly crawl the web for new insurance links.' },
     { id: 'scenario-stress-test', name: 'Scenario Stress Test', icon: Sliders, color: 'text-orange-600', bg: 'bg-orange-50', desc: 'Simulate accidents & storms to see costs.' },
     { id: 'optimization', name: 'Risk Optimizer', icon: Zap, color: 'text-yellow-500', bg: 'bg-yellow-50', desc: 'One-click policy swap proposal.' },

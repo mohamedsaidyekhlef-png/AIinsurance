@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Search, Zap, Shield, CheckCircle2, FileText, BarChart3, TrendingUp, HelpCircle, BookOpen } from 'lucide-react';
+import { ArrowRight, Search, CheckCircle2, FileText, BarChart3, Shield, HelpCircle, BookOpen } from 'lucide-react';
 import { Button } from '../components/ui/Button';
-import { niches, blogPosts, features, partners } from '../data/mockData';
+import { blogPosts, partners } from '../data/mockData';
 import { Link, useNavigate } from 'react-router-dom';
 
 export const Home = () => {
@@ -10,18 +10,22 @@ export const Home = () => {
   const [headingIndex, setHeadingIndex] = useState(0);
   const navigate = useNavigate();
 
-  const headings = [
+  // Memoize headings to prevent recreation on every render
+  const headings = useMemo(() => [
     <span key="1">Find the <span className="text-blue-600">Best Online Insurance</span> & <span className="text-teal-600">Rates</span></span>,
     <span key="2">Compare <span className="text-blue-600">AI-Powered Rates</span> & Save up to 30%</span>,
     <span key="3">The Future of Insurance is <span className="text-teal-600">Smart, Fast, & Fair</span></span>
-  ];
+  ], []);
 
   useEffect(() => {
-    const timer = setInterval(() => {
+    // Ensure callback is a valid function
+    const rotateHeading = () => {
       setHeadingIndex((prev) => (prev + 1) % headings.length);
-    }, 4000);
+    };
+
+    const timer = setInterval(rotateHeading, 4000);
     return () => clearInterval(timer);
-  }, [headings.length]);
+  }, [headings.length]); // Depend on length which is stable
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();

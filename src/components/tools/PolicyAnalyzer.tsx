@@ -1,57 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { FileText, Check, ShieldCheck, Search, Database, Lock, UploadCloud, ArrowRight, AlertTriangle, XCircle, Info } from 'lucide-react';
+import { FileText, Check, ShieldCheck, Search, Database, Lock, UploadCloud, ArrowRight, AlertTriangle, XCircle, Info, Loader2 } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { Link } from 'react-router-dom';
+import { analyzeDocument, fileToBase64 } from '../../lib/gemini';
 
 export const PolicyAnalyzer = () => {
   const [step, setStep] = useState<'upload' | 'processing' | 'result'>('upload');
-  const [progress, setProgress] = useState(0);
-  const [processStatus, setProcessStatus] = useState('');
-  
-  // Mock analysis data structure
-  const analysisResult = {
-    policyType: "HO-3 Special Form (Homeowners)",
-    carrier: "Global Shield Insurance",
-    grade: "B-",
-    summary: "This policy provides strong Dwelling coverage but has significant gaps in Water Damage and Personal Property limits. It uses 'Actual Cash Value' for roof damage, which may lead to high out-of-pocket costs.",
-    extractedLimits: [
-      { name: "Dwelling (Coverage A)", limit: "$450,000", status: "good" },
-      { name: "Other Structures (Coverage B)", limit: "$45,000", status: "warning" },
-      { name: "Personal Property (Coverage C)", limit: "$225,000", status: "good" },
-      { name: "Loss of Use (Coverage D)", limit: "$90,000", status: "good" },
-      { name: "Liability (Coverage E)", limit: "$100,000", status: "danger" }, // Too low
-    ],
-    clauses: [
-      { id: 1, title: "Water Backup Exclusion", type: "exclusion", desc: "Damages caused by sump pump failure or sewer backup are NOT covered.", impact: "High Risk" },
-      { id: 2, title: "Roof Valuation", type: "limitation", desc: "Roof claims paid at Actual Cash Value (depreciated), not Replacement Cost.", impact: "Medium Risk" },
-      { id: 3, title: "Wind/Hail Deductible", type: "deductible", desc: "Separate deductible of 2% of dwelling coverage ($9,000) applies to wind storms.", impact: "High Cost" }
-    ]
+  const [file, setFile] = useState<File | null>(null);
+  const [analysisResult, setAnalysisResult] = useState<any>(null);
+  const [error, setError] = useState('');
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setFile(e.target.files[0]);
+      handleAnalyze(e.target.files[0]);
+    }
   };
 
-  const handleUpload = () => {
+  const handleAnalyze = async (uploadedFile: File) => {
     setStep('processing');
-    const stages = [
-      { p: 10, text: "Initializing Secure Upload..." },
-      { p: 25, text: "Scrubbing PII (Privacy Layer)..." },
-      { p: 40, text: "OCR Text Extraction (Unstructured.io)..." },
-      { p: 60, text: "Vectorizing Clauses (OpenAI Embeddings)..." },
-      { p: 80, text: "Cross-Referencing State Laws..." },
-      { p: 90, text: "Generating Risk Score..." },
-      { p: 100, text: "Finalizing Report..." }
-    ];
-
-    let currentStage = 0;
-    const interval = setInterval(() => {
-      if (currentStage >= stages.length) {
-        clearInterval(interval);
-        setStep('result');
+    setError('');
+    
+    try {
+      const base64 = await fileToBase64(uploadedFile);
+      const result = await analyzeDocument(base64, uploadedFile.type);
+      
+      if (result.error) {
+        setError(result.error);
+        setStep('upload');
       } else {
-        setProgress(stages[currentStage].p);
-        setProcessStatus(stages[currentStage].text);
-        currentStage++;
+        setAnalysisResult(result);
+        setStep('result');
       }
-    }, 800);
+    } catch (err) {
+      console.error(err);
+      setError("Failed to analyze document. Please try a clear PDF or Image.");
+      setStep('upload');
+    }
   };
 
   return (
@@ -60,63 +47,54 @@ export const PolicyAnalyzer = () => {
         <h2 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
           <FileText className="text-blue-600" /> AI Policy Decoder
         </h2>
-        <p className="text-slate-500 mt-2">Upload your PDF. Our RAG engine extracts limits, exclusions, and hidden clauses instantly.</p>
+        <p className="text-slate-500 mt-2">Upload your actual PDF or Image. Gemini AI extracts limits, exclusions, and hidden clauses instantly.</p>
       </div>
 
       {step === 'upload' && (
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="border-2 border-dashed border-slate-200 rounded-2xl p-12 text-center hover:bg-slate-50 transition-colors cursor-pointer group bg-slate-50/50" onClick={handleUpload}>
+        <motion.div 
+          initial={{ opacity: 0 }} 
+          animate={{ opacity: 1 }} 
+          className="border-2 border-dashed border-slate-200 rounded-2xl p-12 text-center hover:bg-slate-50 transition-colors cursor-pointer group bg-slate-50/50 relative"
+          onClick={() => fileInputRef.current?.click()}
+        >
+          <input 
+            type="file" 
+            ref={fileInputRef} 
+            className="hidden" 
+            accept="application/pdf,image/jpeg,image/png,image/webp"
+            onChange={handleFileChange}
+          />
+          
           <div className="w-24 h-24 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform shadow-sm">
             <UploadCloud size={40} />
           </div>
-          <h3 className="text-xl font-bold text-slate-900 mb-2">Drop your Policy PDF here</h3>
-          <p className="text-slate-500 text-sm mb-8">Supports HO-3, Auto Declarations, and Term Life Documents</p>
+          <h3 className="text-xl font-bold text-slate-900 mb-2">Click to Upload Policy</h3>
+          <p className="text-slate-500 text-sm mb-8">Supports PDF, JPG, PNG (Max 10MB)</p>
+          
+          {error && (
+            <div className="mb-6 p-3 bg-red-50 text-red-600 rounded-lg text-sm font-bold">
+              {error}
+            </div>
+          )}
           
           <div className="flex flex-wrap items-center justify-center gap-6 text-xs text-slate-400 font-medium">
-            <span className="flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-full shadow-sm"><Lock size={12} className="text-green-500" /> PII Scrubbed Locally</span>
-            <span className="flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-full shadow-sm"><ShieldCheck size={12} className="text-green-500" /> 256-bit Encryption</span>
-            <span className="flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-full shadow-sm"><Database size={12} className="text-blue-500" /> No Data Storage</span>
+            <span className="flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-full shadow-sm"><Lock size={12} className="text-green-500" /> Gemini 1.5 Flash Secure Analysis</span>
+            <span className="flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-full shadow-sm"><ShieldCheck size={12} className="text-green-500" /> Encrypted Transfer</span>
           </div>
         </motion.div>
       )}
 
       {step === 'processing' && (
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="py-16 text-center">
-          <div className="w-full max-w-md mx-auto mb-10">
-             <div className="flex justify-between text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">
-               <span>Analysis Progress</span>
-               <span>{progress}%</span>
-             </div>
-             <div className="h-3 bg-slate-100 rounded-full overflow-hidden shadow-inner">
-               <motion.div 
-                 className="h-full bg-gradient-to-r from-blue-500 to-teal-400"
-                 initial={{ width: 0 }}
-                 animate={{ width: `${progress}%` }}
-               />
-             </div>
-             <p className="mt-4 text-slate-700 font-medium animate-pulse flex items-center justify-center gap-2">
-               <span className="w-2 h-2 bg-blue-500 rounded-full animate-ping" />
-               {processStatus}
-             </p>
-          </div>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-2xl mx-auto text-xs text-slate-500">
-             <div className={`p-4 rounded-xl border transition-all duration-300 ${progress > 25 ? 'border-green-200 bg-green-50 text-green-700 shadow-sm' : 'border-slate-100 bg-slate-50'}`}>
-               <div className="font-bold mb-1">1. Privacy Layer</div>
-               Removing Names & Addresses
-             </div>
-             <div className={`p-4 rounded-xl border transition-all duration-300 ${progress > 60 ? 'border-blue-200 bg-blue-50 text-blue-700 shadow-sm' : 'border-slate-100 bg-slate-50'}`}>
-               <div className="font-bold mb-1">2. Vector Analysis</div>
-               Matching Clauses to Database
-             </div>
-             <div className={`p-4 rounded-xl border transition-all duration-300 ${progress > 90 ? 'border-purple-200 bg-purple-50 text-purple-700 shadow-sm' : 'border-slate-100 bg-slate-50'}`}>
-               <div className="font-bold mb-1">3. Risk Scoring</div>
-               Calculating Coverage Grade
-             </div>
-          </div>
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="py-20 text-center">
+          <Loader2 size={64} className="text-blue-600 animate-spin mx-auto mb-8" />
+          <h3 className="text-2xl font-bold text-slate-900 mb-2">Analyzing Document...</h3>
+          <p className="text-slate-500 max-w-md mx-auto">
+            Gemini AI is reading your file, identifying coverage limits, and cross-referencing exclusions. This may take up to 30 seconds.
+          </p>
         </motion.div>
       )}
 
-      {step === 'result' && (
+      {step === 'result' && analysisResult && (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
           {/* Scorecard Header */}
           <div className="bg-white rounded-3xl shadow-lg border border-slate-200 overflow-hidden mb-8">
@@ -142,7 +120,7 @@ export const PolicyAnalyzer = () => {
                 <Database size={18} className="text-blue-600" /> Extracted Coverage Limits
               </h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {analysisResult.extractedLimits.map((limit, i) => (
+                {analysisResult.extractedLimits?.map((limit: any, i: number) => (
                   <div key={i} className="p-4 rounded-xl bg-slate-50 border border-slate-100 flex justify-between items-center">
                     <div>
                       <div className="text-xs text-slate-500 font-medium mb-1">{limit.name}</div>
@@ -162,8 +140,8 @@ export const PolicyAnalyzer = () => {
                 <AlertTriangle size={18} className="text-red-600" /> Critical Exclusions & Warnings
               </h4>
               <div className="space-y-3">
-                {analysisResult.clauses.map((clause) => (
-                  <div key={clause.id} className="bg-white p-4 rounded-xl border border-red-100 shadow-sm flex gap-4">
+                {analysisResult.clauses?.map((clause: any, i: number) => (
+                  <div key={i} className="bg-white p-4 rounded-xl border border-red-100 shadow-sm flex gap-4">
                     <div className="mt-1">
                       {clause.type === 'exclusion' && <XCircle className="text-red-500" size={20} />}
                       {clause.type === 'limitation' && <AlertTriangle className="text-orange-500" size={20} />}
@@ -184,7 +162,7 @@ export const PolicyAnalyzer = () => {
           </div>
           
           <div className="flex flex-col sm:flex-row gap-4">
-            <Button onClick={() => setStep('upload')} variant="outline" className="flex-1 border-slate-200">Analyze Another Document</Button>
+            <Button onClick={() => { setStep('upload'); setFile(null); }} variant="outline" className="flex-1 border-slate-200">Analyze Another Document</Button>
             <Link to="/compare" className="flex-1">
               <Button className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 shadow-lg shadow-blue-600/20">
                 Fix These Gaps (Compare Quotes) <ArrowRight size={16} />

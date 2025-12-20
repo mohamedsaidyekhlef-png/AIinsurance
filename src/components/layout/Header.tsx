@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, TrendingUp, ChevronDown, FileText, BarChart3, Shield, Activity, Camera, Smartphone, CloudLightning, Sliders, Zap, Globe } from 'lucide-react';
+import { Menu, X, TrendingUp, ChevronDown, FileText, BarChart3, Shield, Activity, Camera, Smartphone, CloudLightning, Sliders, Zap, Globe, Database } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '../../lib/utils';
@@ -36,6 +36,7 @@ export const Header = () => {
 
   const toolsMenu = [
     { name: 'Risk Pulse', path: '/tools', icon: Activity, color: 'text-red-600', desc: 'Financial Health Score' },
+    { name: 'Global Risk Engine', path: '/tools/global-risk-engine', icon: Database, color: 'text-blue-600', desc: 'PSEO Command Center' },
     { name: 'Market Scanner', path: '/tools/market-scanner', icon: Globe, color: 'text-emerald-500', desc: 'Secret Web Crawler' },
     { name: 'Scenario Stress Test', path: '/tools/scenario-stress-test', icon: Sliders, color: 'text-orange-600', desc: 'Simulate accidents & storms' },
     { name: 'Risk Optimizer', path: '/tools/optimization', icon: Zap, color: 'text-yellow-500', desc: 'One-click policy swap' },
