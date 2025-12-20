@@ -2,8 +2,19 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const API_KEY = import.meta.env.VITE_GEMINI_API_KEY || "";
 const genAI = new GoogleGenerativeAI(API_KEY);
-// Use specific version to avoid 404 on alias
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-001" });
+// UPDATED: Use the standard alias
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+export interface RecommendedCompany {
+  name: string;
+  url: string;
+  rating: number;
+  trustScore: number; // 0-100
+  priceLevel: string; // $, $$, $$$
+  badge: string; // e.g. "Best for Floods"
+  reason: string; // "Top rated for claims speed in Miami"
+  logo: string; // Emoji or simple text
+}
 
 export interface LocalPageData {
   city: string;
@@ -23,7 +34,8 @@ export interface LocalPageData {
     aiSolution: string;
     savings: string;
   }[];
-  recommendedAffiliates: string[]; // IDs of partners
+  // Changed from string[] to detailed object array
+  recommendedCompanies: RecommendedCompany[];
 }
 
 export const generateLocalPageContent = async (country: string, city: string, niche: string): Promise<LocalPageData> => {
@@ -36,6 +48,11 @@ export const generateLocalPageContent = async (country: string, city: string, ni
       - We are "Insuralix", an AI insurance comparison platform.
       - We need to convince users in ${city} that traditional insurance is outdated for ${niche} risks.
       - Use real-sounding local data (hallucinate plausible stats based on real-world reputation of the city, e.g., Flood in Miami, Theft in London).
+
+      CRITICAL: Generate a list of 3-4 REAL insurance companies that actually operate in ${city} and are good for ${niche}.
+      - Do NOT use affiliate links. Use their REAL official homepage URLs (e.g., https://www.geico.com).
+      - Assign an "Insuralix Trust Score" (80-99) based on their digital reputation.
+      - Provide a specific "Reason" why they are good for this city/niche.
 
       Output JSON format ONLY:
       {
@@ -52,7 +69,18 @@ export const generateLocalPageContent = async (country: string, city: string, ni
           { "traditional": "Generic Zip Code Pricing", "aiSolution": "Hyper-local Risk Mapping", "savings": "15%" },
           { "traditional": "Slow Claims (Weeks)", "aiSolution": "Instant AI Payouts", "savings": "Time" }
         ],
-        "recommendedAffiliates": ["lemonade", "root"] 
+        "recommendedCompanies": [
+          {
+            "name": "Company Name",
+            "url": "https://www.real-website.com",
+            "rating": 4.8,
+            "trustScore": 95,
+            "priceLevel": "$$",
+            "badge": "Best for ${niche}",
+            "reason": "Uses satellite data to price ${niche} risk accurately in ${city}.",
+            "logo": "🏢"
+          }
+        ]
       }
     `;
 
@@ -70,7 +98,28 @@ export const generateLocalPageContent = async (country: string, city: string, ni
       localRiskStat: { value: "High", label: "Risk Level", source: "Local Data", trend: "up" },
       guideContent: "<p>Loading local insights...</p>",
       aiAdvantage: [],
-      recommendedAffiliates: ["lemonade"]
+      recommendedCompanies: [
+        {
+          name: "Lemonade",
+          url: "https://www.lemonade.com",
+          rating: 4.8,
+          trustScore: 92,
+          priceLevel: "$",
+          badge: "AI-First Choice",
+          reason: "Fastest claims processing for urban areas.",
+          logo: "🍋"
+        },
+        {
+          name: "Allianz",
+          url: "https://www.allianz.com",
+          rating: 4.5,
+          trustScore: 88,
+          priceLevel: "$$",
+          badge: "Global Stability",
+          reason: "Strong financial backing for major claims.",
+          logo: "🦅"
+        }
+      ]
     };
   }
 };

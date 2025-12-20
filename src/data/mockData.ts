@@ -117,7 +117,7 @@ export const partners = [
   {
     name: "Lemonade",
     logo: "🍋",
-    affiliateLink: "https://lemonade.com/r/YOUR_AFFILIATE_ID",
+    affiliateLink: "https://www.lemonade.com",
     description: "Instant everything. Killer prices. Best for Renters, Home, Car & Pet.",
     categories: ['home', 'auto', 'health'],
     region: "USA"
@@ -125,7 +125,7 @@ export const partners = [
   {
     name: "Ethos",
     logo: "🛡️",
-    affiliateLink: "https://ethoslife.com/apply?referrer=YOUR_AFFILIATE_ID",
+    affiliateLink: "https://www.ethoslife.com",
     description: "100% online life insurance. No medical exams for most. Instant decisions.",
     categories: ['health', 'life'],
     region: "USA"
@@ -133,7 +133,7 @@ export const partners = [
   {
     name: "Hippo",
     logo: "🦛",
-    affiliateLink: "https://hippo.com/quote?ref=YOUR_AFFILIATE_ID",
+    affiliateLink: "https://www.hippo.com",
     description: "Modern home insurance that uses satellite data to price your policy fairly.",
     categories: ['home'],
     region: "USA"
@@ -141,7 +141,7 @@ export const partners = [
   {
     name: "Root",
     logo: "🚗",
-    affiliateLink: "https://joinroot.com/?ref=YOUR_AFFILIATE_ID",
+    affiliateLink: "https://www.joinroot.com",
     description: "Car insurance based on how you drive, not who you are.",
     categories: ['auto'],
     region: "USA"
@@ -149,7 +149,7 @@ export const partners = [
   {
     name: "Coalition",
     logo: "🔒",
-    affiliateLink: "https://www.coalitioninc.com/",
+    affiliateLink: "https://www.coalitioninc.com",
     description: "Active cyber insurance that helps prevent attacks before they happen.",
     categories: ['cyber', 'business'],
     region: "Global"
@@ -159,7 +159,7 @@ export const partners = [
   {
     name: "Manulife",
     logo: "🍁",
-    affiliateLink: "https://www.manulife.ca/",
+    affiliateLink: "https://www.manulife.ca",
     description: "Canada's leading provider with Vitality AI wellness integration.",
     categories: ['life', 'health', 'travel'],
     region: "Canada"
@@ -167,7 +167,7 @@ export const partners = [
   {
     name: "Intact",
     logo: "🏢",
-    affiliateLink: "https://www.intact.ca/",
+    affiliateLink: "https://www.intact.ca",
     description: "Largest provider of property and casualty insurance in Canada.",
     categories: ['auto', 'home', 'business'],
     region: "Canada"
@@ -175,7 +175,7 @@ export const partners = [
   {
     name: "Sun Life",
     logo: "☀️",
-    affiliateLink: "https://www.sunlife.ca/",
+    affiliateLink: "https://www.sunlife.ca",
     description: "Digital-first life and health solutions for Canadians.",
     categories: ['life', 'health'],
     region: "Canada"
@@ -185,7 +185,7 @@ export const partners = [
   {
     name: "Allianz",
     logo: "🦅",
-    affiliateLink: "https://www.allianz.com/",
+    affiliateLink: "https://www.allianz.com",
     description: "Global giant using advanced analytics for tailored European coverage.",
     categories: ['auto', 'home', 'business', 'travel'],
     region: "Europe"
@@ -193,7 +193,7 @@ export const partners = [
   {
     name: "AXA",
     logo: "🟦",
-    affiliateLink: "https://www.axa.com/",
+    affiliateLink: "https://www.axa.com",
     description: "Tech-forward insurer offering blockchain-based flight delay products.",
     categories: ['health', 'travel', 'auto'],
     region: "Europe"
@@ -201,7 +201,7 @@ export const partners = [
   {
     name: "Aviva",
     logo: "🟡",
-    affiliateLink: "https://www.aviva.co.uk/",
+    affiliateLink: "https://www.aviva.co.uk",
     description: "UK's leading insurer with the 'Aviva Drive' telematics app.",
     categories: ['auto', 'home', 'life'],
     region: "Europe"
@@ -209,7 +209,7 @@ export const partners = [
   {
     name: "Zurich",
     logo: "🇨🇭",
-    affiliateLink: "https://www.zurich.com/",
+    affiliateLink: "https://www.zurich.com",
     description: "Swiss precision meets AI risk modeling for global businesses.",
     categories: ['business', 'cyber'],
     region: "Europe"
@@ -217,7 +217,7 @@ export const partners = [
   {
     name: "Admiral",
     logo: "⚓",
-    affiliateLink: "https://www.admiral.com/",
+    affiliateLink: "https://www.admiral.com",
     description: "Multi-car discounts and AI-driven pricing for UK drivers.",
     categories: ['auto', 'home'],
     region: "Europe"
@@ -235,7 +235,7 @@ export const partners = [
   {
     name: "Suncorp",
     logo: "☀️",
-    affiliateLink: "https://www.suncorp.com.au/",
+    affiliateLink: "https://www.suncorp.com.au",
     description: "Leading general insurer in Australia with digital claims processing.",
     categories: ['home', 'auto', 'health'],
     region: "Australia"
@@ -243,7 +243,7 @@ export const partners = [
   {
     name: "Youi",
     logo: "🫵",
-    affiliateLink: "https://www.youi.com.au/",
+    affiliateLink: "https://www.youi.com.au",
     description: "Insures what you actually use. Strong focus on customer data.",
     categories: ['auto', 'home'],
     region: "Australia"
@@ -251,7 +251,7 @@ export const partners = [
   {
     name: "Nib",
     logo: "🟢",
-    affiliateLink: "https://www.nib.com.au/",
+    affiliateLink: "https://www.nib.com.au",
     description: "Health insurance with AI-powered health management programs.",
     categories: ['health', 'travel'],
     region: "Australia"

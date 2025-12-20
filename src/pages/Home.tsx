@@ -25,7 +25,7 @@ export const Home = () => {
 
     const timer = setInterval(rotateHeading, 4000);
     return () => clearInterval(timer);
-  }, [headings.length]); // Depend on length which is stable
+  }, [headings]); // Depend on headings array itself
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();

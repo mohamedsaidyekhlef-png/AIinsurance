@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { generateLocalPageContent, LocalPageData, getCategoryFromNiche } from '../lib/pseo';
+import { generateLocalPageContent, LocalPageData } from '../lib/pseo';
 import { LocalMap } from '../components/pseo/LocalMap';
 import { Button } from '../components/ui/Button';
-import { partners } from '../data/mockData';
-import { CheckCircle2, ArrowRight, ShieldCheck, TrendingDown, Loader2, Star, X, AlertTriangle } from 'lucide-react';
+import { CheckCircle2, ArrowRight, ShieldCheck, TrendingDown, Loader2, Star, X, AlertTriangle, ExternalLink, ThumbsUp } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export const LocalRiskPage = () => {
@@ -36,10 +35,6 @@ export const LocalRiskPage = () => {
     return () => document.removeEventListener('mouseleave', handleMouseLeave);
   }, [showExitIntent]);
 
-  // Filter affiliates based on niche
-  const category = getCategoryFromNiche(niche || '');
-  const relevantPartners = partners.filter(p => p.categories.includes(category)).slice(0, 3);
-
   if (loading) {
     return (
       <div className="min-h-screen pt-32 flex flex-col items-center justify-center bg-slate-50">
@@ -70,11 +65,9 @@ export const LocalRiskPage = () => {
             </p>
             
             <div className="flex flex-wrap gap-4">
-              <Link to="/compare">
-                <Button size="lg" className="bg-blue-600 hover:bg-blue-500 border-none shadow-[0_0_20px_rgba(37,99,235,0.3)]">
-                  Compare {niche} Rates in {city}
-                </Button>
-              </Link>
+              <Button onClick={() => document.getElementById('recommendations')?.scrollIntoView({ behavior: 'smooth' })} size="lg" className="bg-blue-600 hover:bg-blue-500 border-none shadow-[0_0_20px_rgba(37,99,235,0.3)]">
+                View Top {niche} Insurers
+              </Button>
               <Link to="/search">
                 <Button variant="outline" size="lg" className="border-slate-600 text-slate-300 hover:bg-slate-800 hover:text-white">
                   View Local Risk Map
@@ -141,40 +134,52 @@ export const LocalRiskPage = () => {
             </div>
           </div>
 
-          {/* Sidebar / Affiliate Rail */}
-          <div className="space-y-6">
-            <div className="bg-blue-600 text-white p-8 rounded-3xl shadow-lg sticky top-32">
-              <h3 className="text-xl font-bold mb-6">Top {niche} Insurers for {city}</h3>
+          {/* Sidebar / Recommendations Rail */}
+          <div className="space-y-6" id="recommendations">
+            <div className="bg-slate-900 text-white p-8 rounded-3xl shadow-lg sticky top-32">
+              <div className="flex items-center gap-2 mb-6">
+                 <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                 <h3 className="text-xl font-bold">Top Picks for {city}</h3>
+              </div>
+              
               <div className="space-y-4">
-                {relevantPartners.map((partner, idx) => (
-                  <div key={idx} className="bg-white text-slate-900 p-4 rounded-xl shadow-sm">
-                    <div className="flex justify-between items-start mb-2">
-                      <div className="text-2xl">{partner.logo}</div>
-                      <div className="flex text-yellow-400">
-                        <Star size={14} fill="currentColor" />
-                        <Star size={14} fill="currentColor" />
-                        <Star size={14} fill="currentColor" />
-                        <Star size={14} fill="currentColor" />
-                        <Star size={14} fill="currentColor" />
+                {data.recommendedCompanies.map((company, idx) => (
+                  <div key={idx} className="bg-white text-slate-900 p-5 rounded-xl shadow-sm group hover:shadow-md transition-all">
+                    <div className="flex justify-between items-start mb-3">
+                      <div className="text-2xl bg-slate-100 w-10 h-10 flex items-center justify-center rounded-lg">{company.logo}</div>
+                      <div className="text-right">
+                         <div className="text-xs font-bold text-slate-400 uppercase">Trust Score</div>
+                         <div className="text-lg font-bold text-green-600">{company.trustScore}/100</div>
                       </div>
                     </div>
-                    <div className="font-bold text-lg mb-1">{partner.name}</div>
-                    <p className="text-xs text-slate-500 mb-3 line-clamp-2">{partner.description}</p>
-                    <a href={partner.affiliateLink} target="_blank" rel="noreferrer">
-                      <Button size="sm" className="w-full bg-slate-900 text-white hover:bg-slate-800">
-                        Check {city} Rates
+                    
+                    <div className="mb-2">
+                       <div className="font-bold text-lg">{company.name}</div>
+                       <div className="flex items-center gap-2 text-xs text-slate-500">
+                          <span className="flex text-yellow-500"><Star size={12} fill="currentColor" /> {company.rating}</span>
+                          <span>•</span>
+                          <span className="font-bold text-slate-700">{company.priceLevel}</span>
+                       </div>
+                    </div>
+
+                    <div className="bg-blue-50 p-2 rounded-lg text-xs text-blue-800 mb-4 flex gap-2 items-start">
+                       <ThumbsUp size={12} className="shrink-0 mt-0.5" />
+                       {company.reason}
+                    </div>
+
+                    <a href={company.url} target="_blank" rel="noreferrer">
+                      <Button size="sm" className="w-full bg-slate-900 text-white hover:bg-slate-800 flex items-center justify-center gap-2">
+                        Visit Website <ExternalLink size={12} />
                       </Button>
                     </a>
                   </div>
                 ))}
               </div>
-              <div className="mt-6 pt-6 border-t border-blue-500/30 text-center">
-                <p className="text-xs text-blue-200 mb-3">
-                  "I saved $420 switching to {relevantPartners[0]?.name} in {city}."
+              
+              <div className="mt-6 pt-6 border-t border-slate-700 text-center">
+                <p className="text-xs text-slate-400 mb-2">
+                   Insuralix uses AI to analyze thousands of reviews and regulatory data to generate these scores.
                 </p>
-                <div className="flex items-center justify-center gap-2 text-xs font-bold">
-                  <CheckCircle2 size={14} className="text-green-300" /> Verified Local Review
-                </div>
               </div>
             </div>
           </div>
@@ -225,11 +230,11 @@ export const LocalRiskPage = () => {
 
                 <div className="flex gap-4">
                    <Button onClick={() => setShowExitIntent(false)} variant="outline" className="flex-1">Close</Button>
-                   <Link to="/compare" className="flex-1">
+                   <a href={data.recommendedCompanies[0]?.url || '/compare'} target="_blank" rel="noreferrer" className="flex-1">
                       <Button className="w-full bg-red-600 hover:bg-red-700 shadow-lg shadow-red-600/20">
                          Check My Rate
                       </Button>
-                   </Link>
+                   </a>
                 </div>
               </div>
             </motion.div>
