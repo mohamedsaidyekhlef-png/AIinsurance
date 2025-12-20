@@ -12,7 +12,22 @@ const model = genAI.getGenerativeModel({ model: MODEL_ID });
 const parseJSON = (text: string) => {
   try {
     // Remove markdown code blocks if present
-    const cleanText = text.replace(/```json/g, '').replace(/```/g, '').trim();
+    let cleanText = text.replace(/```json/g, '').replace(/```/g, '').trim();
+    // Find the first '[' or '{'
+    const firstBracket = cleanText.indexOf('[');
+    const firstBrace = cleanText.indexOf('{');
+    const start = (firstBracket !== -1 && (firstBrace === -1 || firstBracket < firstBrace)) ? firstBracket : firstBrace;
+    
+    if (start !== -1) {
+        cleanText = cleanText.substring(start);
+        // Find the last ']' or '}'
+        const lastBracket = cleanText.lastIndexOf(']');
+        const lastBrace = cleanText.lastIndexOf('}');
+        const end = Math.max(lastBracket, lastBrace);
+        if (end !== -1) {
+            cleanText = cleanText.substring(0, end + 1);
+        }
+    }
     return JSON.parse(cleanText);
   } catch (e) {
     console.error("JSON Parse Error:", e);
@@ -46,7 +61,13 @@ const getRealUrl = (name: string) => {
     "Kin": "https://www.kin.com",
     "Clearcover": "https://clearcover.com",
     "Loop": "https://www.loopinsurance.com",
-    "Branch": "https://www.ourbranch.com"
+    "Branch": "https://www.ourbranch.com",
+    "Oscar": "https://www.hioscar.com",
+    "Clover": "https://www.cloverhealth.com",
+    "Beam": "https://www.beam.dental",
+    "Spot": "https://spotinsurance.com",
+    "Next": "https://www.nextinsurance.com",
+    "Thimble": "https://www.thimble.com"
   };
   
   const key = Object.keys(map).find(k => name.toLowerCase().includes(k.toLowerCase()));
@@ -122,14 +143,18 @@ export const analyzeAndNegotiatePolicy = async (fileBase64: string, mimeType: st
   }
 };
 
-// --- 2. Market Scanner (Reliable) ---
+// --- 2. Market Scanner (Precise Filtering) ---
 
-export const generateMarketData = async (query: string) => {
+export const generateMarketData = async (niche: string, country: string = "Global", city: string = "") => {
   try {
+    const locationContext = city ? `${city}, ${country}` : country;
     const prompt = `
-      Generate 1 realistic "InsurTech" company discovery for the niche: "${query}".
-      Return JSON ONLY:
-      [{ "name": "Company Name", "type": "Niche", "region": "Global", "rating": 4.7, "url": "https://..." }]
+      Generate 1 realistic "InsurTech" company discovery specifically for the niche: "${niche}" in location: "${locationContext}".
+      If the niche is "Health", only return Health insurance companies.
+      If the niche is "Auto", only return Auto insurance companies.
+      
+      Return JSON ONLY array:
+      [{ "name": "Company Name", "type": "${niche}", "region": "${locationContext}", "rating": 4.7, "url": "https://..." }]
     `;
 
     const result = await model.generateContent(prompt);
@@ -140,16 +165,24 @@ export const generateMarketData = async (query: string) => {
     }
     return [];
   } catch (error) {
-    // Fallback Data - Randomized to simulate activity
+    // Fallback Data - Filtered by niche if possible
     const fallbacks = [
-      { name: "Kin Insurance", type: "Home (Florida)", region: "USA", rating: 4.6, url: "https://www.kin.com" },
-      { name: "Clearcover", type: "Auto (AI)", region: "USA", rating: 4.5, url: "https://clearcover.com" },
-      { name: "Loop", type: "Auto (Social)", region: "USA", rating: 4.7, url: "https://www.loopinsurance.com" },
-      { name: "Branch", type: "Home/Auto Bundle", region: "USA", rating: 4.8, url: "https://www.ourbranch.com" },
-      { name: "Openly", type: "Premium Home", region: "USA", rating: 4.9, url: "https://openly.com" }
+      { name: "Kin Insurance", type: "Home", region: "USA", rating: 4.6, url: "https://www.kin.com" },
+      { name: "Clearcover", type: "Auto", region: "USA", rating: 4.5, url: "https://clearcover.com" },
+      { name: "Oscar Health", type: "Health", region: "USA", rating: 4.4, url: "https://www.hioscar.com" },
+      { name: "Clover Health", type: "Health", region: "USA", rating: 4.3, url: "https://www.cloverhealth.com" },
+      { name: "Loop", type: "Auto", region: "USA", rating: 4.7, url: "https://www.loopinsurance.com" },
+      { name: "Branch", type: "Home/Auto", region: "USA", rating: 4.8, url: "https://www.ourbranch.com" },
+      { name: "Openly", type: "Home", region: "USA", rating: 4.9, url: "https://openly.com" },
+      { name: "Spot", type: "Life/Accident", region: "USA", rating: 4.6, url: "https://spotinsurance.com" }
     ];
-    const random = fallbacks[Math.floor(Math.random() * fallbacks.length)];
-    return [random];
+    
+    // Simple filter for fallback
+    const filtered = fallbacks.filter(f => f.type.toLowerCase().includes(niche.toLowerCase()) || niche.toLowerCase() === 'all');
+    const pool = filtered.length > 0 ? filtered : fallbacks;
+    
+    const random = pool[Math.floor(Math.random() * pool.length)];
+    return [{ ...random, region: city || country }];
   }
 };
 

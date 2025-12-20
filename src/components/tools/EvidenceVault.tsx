@@ -44,8 +44,8 @@ export const EvidenceVault = () => {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-         {/* Scanner View */}
-         <div className="bg-slate-900 rounded-3xl overflow-hidden relative aspect-[3/4] md:aspect-auto md:h-[600px] flex flex-col items-center justify-center group shadow-2xl">
+         {/* Scanner View - Mobile Optimized Aspect Ratio */}
+         <div className="bg-slate-900 rounded-3xl overflow-hidden relative min-h-[400px] md:h-[600px] flex flex-col items-center justify-center group shadow-2xl">
             {!items.length && !scanning && (
                <>
                  <div className="w-20 h-20 bg-white/10 rounded-full flex items-center justify-center mb-6 backdrop-blur-sm">

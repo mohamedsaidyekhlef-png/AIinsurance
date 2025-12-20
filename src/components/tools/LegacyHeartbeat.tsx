@@ -63,7 +63,7 @@ export const LegacyHeartbeat = () => {
         {/* Visualization */}
         <div className="md:col-span-2">
            {!result ? (
-              <div className="h-full bg-slate-50 rounded-3xl border border-dashed border-slate-300 flex items-center justify-center text-slate-400 p-12 text-center">
+              <div className="h-full bg-slate-50 rounded-3xl border border-dashed border-slate-300 flex items-center justify-center text-slate-400 p-12 text-center min-h-[300px]">
                  <div>
                     <Heart size={48} className="mx-auto mb-4 opacity-20" />
                     <p>Enter details to map your legacy.</p>
@@ -77,11 +77,11 @@ export const LegacyHeartbeat = () => {
                        <div className="flex justify-between items-start mb-6">
                           <div>
                              <div className="text-sm text-slate-400 uppercase font-bold mb-1">Projected Need (2045)</div>
-                             <div className="text-4xl font-bold text-white">{result.projectedNeed}</div>
+                             <div className="text-3xl md:text-4xl font-bold text-white">{result.projectedNeed}</div>
                           </div>
                           <div className="text-right">
                              <div className="text-sm text-red-400 uppercase font-bold mb-1">Heartbeat Gap</div>
-                             <div className="text-4xl font-bold text-red-500">{result.currentGap}</div>
+                             <div className="text-3xl md:text-4xl font-bold text-red-500">{result.currentGap}</div>
                           </div>
                        </div>
                        <div className="h-2 bg-slate-800 rounded-full overflow-hidden mb-4">

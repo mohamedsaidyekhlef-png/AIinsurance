@@ -42,7 +42,7 @@ export const FinePrintDetective = () => {
       {!result ? (
         <div 
           onClick={() => fileInputRef.current?.click()}
-          className="border-2 border-dashed border-slate-300 rounded-3xl p-16 text-center hover:bg-slate-50 transition-all cursor-pointer group relative overflow-hidden"
+          className="border-2 border-dashed border-slate-300 rounded-3xl p-8 md:p-16 text-center hover:bg-slate-50 transition-all cursor-pointer group relative overflow-hidden"
         >
           <input type="file" ref={fileInputRef} className="hidden" accept=".pdf,image/*" onChange={handleFileChange} />
           
@@ -113,7 +113,7 @@ export const FinePrintDetective = () => {
                     <h3 className="text-3xl font-bold text-slate-900">{result.betterOffer.carrier}</h3>
                     <p className="text-slate-600 mt-2 max-w-md">{result.negotiationStrategy}</p>
                  </div>
-                 <div className="text-center bg-white p-6 rounded-2xl shadow-sm border border-green-100 min-w-[200px]">
+                 <div className="text-center bg-white p-6 rounded-2xl shadow-sm border border-green-100 min-w-[200px] w-full md:w-auto">
                     <div className="text-sm text-slate-400 uppercase font-bold">New Price</div>
                     <div className="text-4xl font-bold text-green-600 mb-1">{result.betterOffer.price}</div>
                     <div className="text-xs font-bold text-green-700 bg-green-100 px-2 py-1 rounded-full inline-block">
